@@ -4,18 +4,16 @@ const room = (id: string, label: string, zone: Location['zone']): Location => ({
   id,
   label,
   shortLabel: label,
-  description: 'As salas de aula ficam geralmente no 2º andar. O pavimento exato desta sala ainda não foi confirmado individualmente.',
-  zone,
-  floor: '2º andar (referência geral)',
-  pending: true
+  description: 'Sala de exposição da Feira do Conhecimento.',
+  zone
 })
 
 export const locations: Location[] = [
   {
     id: 'entrada-pais',
-    label: 'Portão de Entrada · pais e responsáveis',
-    shortLabel: 'Entrada dos pais',
-    description: 'Portão de entrada indicado no mapa de blocos para acesso dos visitantes.',
+    label: 'Portão de Entrada · famílias e visitantes',
+    shortLabel: 'Entrada principal',
+    description: 'Entrada indicada para famílias e visitantes da feira.',
     zone: 'external',
     floor: 'Térreo'
   },
@@ -23,7 +21,7 @@ export const locations: Location[] = [
     id: 'portao-secretaria',
     label: 'Portão da Secretaria',
     shortLabel: 'Secretaria',
-    description: 'Portão separado, indicado no lado oposto ao portão de entrada dos visitantes.',
+    description: 'Acesso da Secretaria.',
     zone: 'external',
     floor: 'Térreo'
   },
@@ -45,28 +43,28 @@ export const locations: Location[] = [
     id: 'bloco-03-direita',
     label: 'Bloco 3',
     shortLabel: 'Bloco 3',
-    description: 'Bloco com as salas 14, 15, 13 e 17.',
+    description: 'Bloco com as salas 13, 14, 15 e 17.',
     zone: 'right'
   },
   {
     id: 'passarela',
-    label: 'Passarela entre Bloco 1 e Bloco 2',
+    label: 'Passarela',
     shortLabel: 'Passarela',
-    description: 'Ligação indicada no mapa de blocos entre o Bloco 1 e o Bloco 2.',
+    description: 'Ligação entre o Bloco 1 e o Bloco 2.',
     zone: 'connector'
   },
   {
     id: 'escada-ligacao',
     label: 'Escada / ligação entre prédios',
     shortLabel: 'Escada',
-    description: 'Ligação indicada no croqui geral entre os prédios. Não há elevador ou rampa acessível.',
+    description: 'Ligação entre as áreas de salas.',
     zone: 'connector'
   },
   {
     id: 'patio',
     label: 'Pátio',
     shortLabel: 'Pátio',
-    description: 'Área aberta central indicada no croqui geral da escola.',
+    description: 'Área aberta central da escola.',
     zone: 'external',
     floor: 'Térreo'
   },
@@ -74,7 +72,7 @@ export const locations: Location[] = [
     id: 'quadra',
     label: 'Quadra',
     shortLabel: 'Quadra',
-    description: 'Quadra indicada no lado direito do croqui geral.',
+    description: 'Quadra da escola.',
     zone: 'external',
     floor: 'Térreo'
   },
@@ -82,7 +80,7 @@ export const locations: Location[] = [
     id: 'quadra-areia',
     label: 'Quadra de areia',
     shortLabel: 'Quadra de areia',
-    description: 'Área de lazer / quadra de areia, onde acontece o projeto “Quarenta anos em movimento!”.',
+    description: 'Área de lazer onde acontece o projeto “Quarenta anos em movimento!”.',
     zone: 'external',
     floor: 'Térreo'
   },
@@ -90,7 +88,7 @@ export const locations: Location[] = [
     id: 'refeitorio-cantina',
     label: 'Refeitório / Cantina',
     shortLabel: 'Refeitório',
-    description: 'Cantina e refeitório são o mesmo espaço. O croqui geral indica a cantina no 1º andar.',
+    description: 'Espaço do refeitório e da cantina.',
     zone: 'central',
     floor: '1º andar'
   },
@@ -98,9 +96,8 @@ export const locations: Location[] = [
     id: 'laboratorio-ciencias',
     label: 'Laboratório de Ciências',
     shortLabel: 'Laboratório',
-    description: 'A localização física exata ainda não foi informada.',
-    zone: 'unknown',
-    pending: true
+    description: 'Laboratório de Ciências da escola.',
+    zone: 'unknown'
   },
   ...['01', '02', '03', '04', '05', '06'].map((n) => room(`sala-${n}`, `Sala ${n}`, 'west')),
   ...['07', '08', '09', '10', '11', '12', '16'].map((n) => room(`sala-${n}`, `Sala ${n}`, 'central')),

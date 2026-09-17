@@ -11,9 +11,8 @@ export function RouteCard({ route }: { route: RouteDefinition }) {
           {route.estimatedTime && <span className="chip">{route.estimatedTime}</span>}
         </div>
         <p>{route.subtitle}</p>
-        {route.provisional && <span className="mini-note">Roteiro provisório</span>}
       </div>
-      <span aria-hidden="true">›</span>
+      <span className="route-card__arrow" aria-hidden="true">›</span>
     </Link>
   )
 }

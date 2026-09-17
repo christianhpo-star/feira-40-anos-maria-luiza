@@ -139,8 +139,7 @@ export const projects: Project[] = [
     encounter: 'Demonstrações práticas sobre inovação digital e cooperação entre pessoas e máquinas.',
     description: 'O projeto analisa o impacto das inovações digitais e da Inteligência Artificial no cotidiano, destacando como mentes humanas e máquinas cooperam para solucionar problemas complexos e abrir caminhos para um futuro mais conectado, eficiente e criativo.',
     themes: ['tecnologia-futuro'],
-    timeAnchor: 'Presente → futuro',
-    pendingNote: 'Confirmar se a experiência exige visita às duas salas ou se as salas 12 e 16 formam um único ponto contínuo.'
+    timeAnchor: 'Presente → futuro'
   },
   {
     id: 'quimica-forense',
@@ -154,8 +153,7 @@ export const projects: Project[] = [
     encounter: 'DNA, luminescência, identificação de substâncias e análises toxicológicas em casos reais.',
     description: 'Entre 1986 e 2026, a Química Forense passou por avanços que transformaram a identificação e interpretação de vestígios. A exposição utiliza quatro casos reais para apresentar DNA, luminescência, identificação de substâncias e análises toxicológicas.',
     themes: ['ciencia-saude', 'tecnologia-futuro'],
-    timeAnchor: '1986 → 2026',
-    pendingNote: 'O documento relaciona Sala 13 e Laboratório de Ciências, mas a localização exata do laboratório ainda precisa ser confirmada.'
+    timeAnchor: '1986 → 2026'
   },
   {
     id: 'historia-escola',
@@ -194,7 +192,7 @@ export const projects: Project[] = [
     roomLabel: 'Quadra de areia',
     locationIds: ['quadra-areia'],
     shortSummary: 'A evolução do esporte nos últimos 40 anos e sua relação com saúde, bem-estar e inclusão.',
-    encounter: 'Marcos esportivos, medicina desportiva, saúde física e mental e inclusão social.',
+    encounter: 'Marcos isportivos, medicina desportiva, saúde física e mental e inclusão social.',
     description: 'O projeto analisa a evolução do esporte nos últimos 40 anos, destacando marcos históricos, mudanças nas competições e reflexos na saúde física e mental. Mostra como a prática esportiva se consolidou como ferramenta de bem-estar e inclusão social.',
     themes: ['esporte-sociedade', 'historia-memoria'],
     timeAnchor: '1986 → 2026'

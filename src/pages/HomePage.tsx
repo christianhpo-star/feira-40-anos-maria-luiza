@@ -3,6 +3,7 @@ import { ProgressBar } from '../components/ProgressBar'
 import { useProgress } from '../context/ProgressContext'
 import { projects } from '../data/projects'
 import { routeById } from '../data/routes'
+import { siteInfo } from '../data/site'
 
 export function HomePage() {
   const { visited, activeRoute } = useProgress()
@@ -12,12 +13,18 @@ export function HomePage() {
     <main id="conteudo" className="page home-page">
       <section className="hero">
         <div className="hero__brandrow">
-          <img src="/icons/icon.svg" alt="Marca de 40 anos da E.E. Maria Luiza Miranda Bastos" />
-          <span>1986 — 2026</span>
+          <img src="/images/logo-escola.png" alt="40 anos da E.E. Maria Luiza Miranda Bastos" />
+          <span>{siteInfo.period}</span>
         </div>
-        <p className="kicker">Feira do Conhecimento</p>
+        <div className="event-pill" aria-label={`${siteInfo.date}, ${siteInfo.time}`}>
+          <span aria-hidden="true">◷</span>
+          <strong>{siteInfo.date}</strong>
+          <span>•</span>
+          <span>{siteInfo.time}</span>
+        </div>
+        <p className="kicker">{siteInfo.eventName}</p>
         <h1>Uma viagem por<br /><span>40 anos de histórias.</span></h1>
-        <p className="hero__lead">Descubra projetos, encontre as salas e acompanhe seu percurso pela escola.</p>
+        <p className="hero__lead">Descubra os projetos, encontre as salas e acompanhe seu percurso pela escola.</p>
         <Link className="button button--primary button--large" to={active ? `/rotas/${active.id}` : '/rotas'}>
           {active ? 'Continuar meu percurso' : 'Começar meu percurso'} <span aria-hidden="true">→</span>
         </Link>
@@ -26,16 +33,16 @@ export function HomePage() {
 
       {active && (
         <section className="active-route-card" aria-label="Rota ativa">
-          <span className="eyebrow">Rota ativa</span>
+          <span className="eyebrow">Seu percurso</span>
           <strong>{active.title}</strong>
           <span>{active.projectIds.filter((id) => visited.includes(id)).length} de {active.projectIds.length} paradas concluídas</span>
         </section>
       )}
 
       <section className="quick-grid" aria-label="Acessos rápidos">
-        <Link to="/mapa" className="quick-card"><span aria-hidden="true">⌖</span><strong>Ver mapa</strong><small>Onde ficam os blocos</small></Link>
-        <Link to="/rotas" className="quick-card"><span aria-hidden="true">🧭</span><strong>Escolher rota</strong><small>40 min, completa ou temática</small></Link>
-        <Link to="/projetos" className="quick-card"><span aria-hidden="true">▦</span><strong>Todos os projetos</strong><small>15 experiências</small></Link>
+        <Link to="/mapa" className="quick-card"><span aria-hidden="true">⌖</span><strong>Ver mapa</strong><small>Blocos, salas e áreas da feira</small></Link>
+        <Link to="/rotas" className="quick-card"><span aria-hidden="true">🧭</span><strong>Escolher rota</strong><small>40 minutos, completa ou temática</small></Link>
+        <Link to="/projetos" className="quick-card"><span aria-hidden="true">▦</span><strong>Todos os projetos</strong><small>15 experiências para conhecer</small></Link>
         <Link to="/tempo" className="quick-card"><span aria-hidden="true">◷</span><strong>Viagem no tempo</strong><small>1986 → 2026 → futuro</small></Link>
       </section>
 

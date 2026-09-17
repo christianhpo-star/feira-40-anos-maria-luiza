@@ -15,7 +15,8 @@ export function RouteDetailPage() {
 
   const routeProjects = route.projectIds.map((id) => projectById[id]).filter(Boolean)
   const done = route.projectIds.filter((id) => visited.includes(id)).length
-  const next = routeProjects.find((project) => !visited.includes(project.id)) ?? routeProjects[0]
+  const next = routeProjects.find((project) => !visited.includes(project.id))
+  const complete = done === route.projectIds.length
 
   return (
     <main id="conteudo" className="page">
@@ -31,20 +32,17 @@ export function RouteDetailPage() {
         </div>
       </section>
 
-      {route.provisional && (
-        <section className="notice">
-          <strong>Roteiro provisório</strong>
-          <p>Os andares e os tempos de apresentação ainda não foram informados. A ordem será refinada quando esses dados forem confirmados.</p>
-        </section>
-      )}
-
       <ProgressBar value={done} total={route.projectIds.length} label={`${done} de ${route.projectIds.length} paradas concluídas`} />
 
       <div className="action-row">
-        <button className="button button--primary" onClick={() => setActiveRoute(route.id)}>
-          {activeRoute === route.id ? 'Rota ativa ✓' : 'Usar esta rota'}
+        <button className={activeRoute === route.id ? 'button button--done' : 'button button--primary'} onClick={() => setActiveRoute(route.id)}>
+          {activeRoute === route.id ? '✓ Rota selecionada' : 'Usar esta rota'}
         </button>
-        <Link className="button button--secondary" to={`/projeto/${next.id}`}>Ir para próxima parada</Link>
+        {complete ? (
+          <Link className="button button--secondary" to="/passaporte">Ver meu passaporte</Link>
+        ) : next ? (
+          <Link className="button button--secondary" to={`/projeto/${next.id}`}>Ir para próxima parada</Link>
+        ) : null}
       </div>
 
       <section className="section-block">
