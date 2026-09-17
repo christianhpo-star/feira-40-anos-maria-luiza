@@ -5,6 +5,7 @@ import App from './App'
 import { ProgressProvider } from './context/ProgressContext'
 import './styles/global.css'
 import './styles/public-polish.css'
+import './styles/final-fixes.css'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
