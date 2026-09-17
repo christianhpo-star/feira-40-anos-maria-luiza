@@ -1,0 +1,53 @@
+.hero__brandrow {
+  align-items: center;
+  overflow: visible;
+}
+
+.hero__brandrow img {
+  display: block;
+  width: 116px;
+  height: 116px;
+  max-width: 42vw;
+  max-height: none;
+  padding: 7px;
+  flex: 0 0 auto;
+  object-fit: contain;
+  object-position: center;
+}
+
+.header-logo {
+  display: block;
+  width: 56px;
+  height: 56px;
+  padding: 4px;
+  flex: 0 0 auto;
+  object-fit: contain;
+  object-position: center;
+  overflow: visible;
+}
+
+.map-floor-label {
+  fill: var(--blue);
+  font-size: 17px;
+  font-weight: 900;
+  letter-spacing: .055em;
+}
+
+@media (max-width: 430px) {
+  .hero__brandrow img {
+    width: 96px;
+    height: 96px;
+    max-width: 38vw;
+    padding: 6px;
+  }
+
+  .header-logo {
+    width: 52px;
+    height: 52px;
+    padding: 4px;
+  }
+
+  .map-floor-label {
+    font-size: 23px;
+  }
+}
