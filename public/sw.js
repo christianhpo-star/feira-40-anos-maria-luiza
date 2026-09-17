@@ -1,5 +1,11 @@
-const CACHE = 'feira-40-anos-v4'
-const CORE = ['/', '/manifest.webmanifest', '/icons/icon.svg']
+const CACHE = 'feira-40-anos-v3'
+const CORE = [
+  '/',
+  '/manifest.webmanifest',
+  '/images/logo-escola.png',
+  '/icons/icon-192.png',
+  '/icons/icon-512.png'
+]
 
 self.addEventListener('install', (event) => {
   event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(CORE)))
@@ -24,8 +30,10 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(
       fetch(event.request)
         .then((response) => {
-          const copy = response.clone()
-          caches.open(CACHE).then((cache) => cache.put('/', copy))
+          if (response.ok) {
+            const copy = response.clone()
+            caches.open(CACHE).then((cache) => cache.put('/', copy))
+          }
           return response
         })
         .catch(() => caches.match('/'))

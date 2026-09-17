@@ -22,16 +22,17 @@ export function ProjectPage() {
   const isVisited = visited.includes(project.id)
   const route = activeRoute ? routeById[activeRoute] : null
   const currentIndex = route?.projectIds.indexOf(project.id) ?? -1
-  const nextId = route && currentIndex >= 0 ? route.projectIds[currentIndex + 1] : null
+  const projectIsInRoute = Boolean(route && currentIndex >= 0)
+  const nextId = projectIsInRoute && route ? route.projectIds[currentIndex + 1] : null
   const nextProject = nextId ? projectById[nextId] : null
-  const primaryLocation = locationById[project.locationIds[0]]
+  const backTo = projectIsInRoute && route ? `/rotas/${route.id}` : '/projetos'
 
   return (
     <main id="conteudo" className="page project-detail">
-      <PageHeader title={project.roomLabel} subtitle={project.blockLabel} backTo="/projetos" />
+      <PageHeader title={project.roomLabel} subtitle={project.blockLabel} backTo={backTo} />
 
       {qrLocation && locationById[qrLocation] && (
-        <div className="location-confirm" role="status">⌖ Localização atualizada: <strong>{locationById[qrLocation].label}</strong></div>
+        <div className="location-confirm" role="status">⌖ Você está em <strong>{locationById[qrLocation].label}</strong></div>
       )}
 
       <section className="project-title-card">
@@ -40,18 +41,15 @@ export function ProjectPage() {
         <p>{project.shortSummary}</p>
       </section>
 
-      <section className="info-panel info-panel--three">
+      <section className="info-panel">
         <div><span>Local</span><strong>{project.blockLabel}<br />{project.roomLabel}</strong></div>
-        <div><span>Pavimento</span><strong>{primaryLocation?.floor ?? 'A confirmar'}</strong></div>
-        <div><span>Duração</span><strong>A confirmar</strong></div>
+        <div><span>Turma</span><strong>{project.className}</strong></div>
       </section>
 
       <section className="content-card">
         <span className="eyebrow">O que você vai encontrar</span>
         <p className="encounter-text">{project.encounter}</p>
       </section>
-
-      {project.pendingNote && <section className="notice"><strong>Informação pendente</strong><p>{project.pendingNote}</p></section>}
 
       <div className="action-stack">
         <Link className="button button--secondary button--large" to={`/mapa?destino=${project.locationIds[0]}`}>⌖ Como chegar</Link>
@@ -61,11 +59,11 @@ export function ProjectPage() {
       </div>
 
       <details className="details-card">
-        <summary>Saiba mais</summary>
+        <summary>Saiba mais sobre o projeto</summary>
         <p>{project.description}</p>
       </details>
 
-      {route && (
+      {projectIsInRoute && route && (
         <section className="next-stop">
           <span className="eyebrow">{route.title}</span>
           {nextProject ? (
@@ -76,7 +74,7 @@ export function ProjectPage() {
             </>
           ) : (
             <>
-              <strong>Fim desta rota</strong>
+              <strong>Você chegou ao fim desta rota.</strong>
               <Link to="/passaporte">Ver meu passaporte →</Link>
             </>
           )}

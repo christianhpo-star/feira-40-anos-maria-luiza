@@ -15,7 +15,6 @@ export interface Project {
   encounter: string
   themes: ThemeId[]
   timeAnchor: string
-  pendingNote?: string
 }
 
 export interface Location {
@@ -25,7 +24,6 @@ export interface Location {
   description: string
   zone: 'west' | 'central' | 'right' | 'external' | 'connector' | 'unknown'
   floor?: string
-  pending?: boolean
 }
 
 export interface RouteDefinition {
@@ -36,6 +34,5 @@ export interface RouteDefinition {
   icon: string
   projectIds: string[]
   estimatedTime?: string
-  provisional?: boolean
   theme?: ThemeId
 }

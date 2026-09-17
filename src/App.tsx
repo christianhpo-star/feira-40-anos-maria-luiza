@@ -8,7 +8,6 @@ import { ProjectPage } from './pages/ProjectPage'
 import { MapPage } from './pages/MapPage'
 import { PassportPage } from './pages/PassportPage'
 import { TimelinePage } from './pages/TimelinePage'
-import { CapsulePage } from './pages/CapsulePage'
 
 export default function App() {
   return (
@@ -22,7 +21,6 @@ export default function App() {
         <Route path="/mapa" element={<MapPage />} />
         <Route path="/passaporte" element={<PassportPage />} />
         <Route path="/tempo" element={<TimelinePage />} />
-        <Route path="/capsula" element={<CapsulePage />} />
         <Route path="*" element={<HomePage />} />
       </Routes>
       <BottomNavigation />

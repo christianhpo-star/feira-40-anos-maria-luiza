@@ -1,15 +1,12 @@
-# Como abrir o aplicativo no computador
+# Como abrir o Passaporte Digital localmente
 
-O `index.html` deste projeto **nao e um HTML independente**. Ele e o ponto de entrada de uma aplicacao React/Vite e depende do servidor de desenvolvimento ou do build de producao.
+Este é um projeto React/Vite. O arquivo `index.html` não deve ser aberto diretamente por duplo clique.
 
-## Windows - forma mais simples
+## Windows
 
-1. Extraia o ZIP inteiro para uma pasta.
-2. De dois cliques em `INICIAR_APP_LOCAL.bat`.
-3. Na primeira vez, o script executa `npm install`.
-4. Em seguida o navegador abre em `http://localhost:5173`.
+Dê dois cliques em `INICIAR_APP_LOCAL.bat`.
 
-> Requisito: Node.js 22 LTS instalado.
+Na primeira execução, o script instala as dependências, inicia o servidor de desenvolvimento e abre o endereço local no navegador.
 
 ## Terminal
 
@@ -18,6 +15,12 @@ npm install
 npm run dev
 ```
 
-## Producao
+Depois abra o endereço informado pelo Vite, normalmente `http://localhost:5173`.
 
-O projeto foi desenhado para ser publicado no Cloudflare Pages. O Cloudflare executara o build e servira os arquivos corretos ao visitante; ninguem precisara rodar Node.js para acessar a feira.
+## Produção
+
+```bash
+npm run build
+```
+
+O build executa primeiro a validação de conteúdo público e, se tudo estiver correto, gera a pasta `dist/` usada pelo Netlify.

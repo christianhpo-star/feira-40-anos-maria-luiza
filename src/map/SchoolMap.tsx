@@ -42,16 +42,32 @@ function Room({ id, x, y, currentLocation, destinationId, visited, onZoneSelect 
   const label = id.replace('sala-', '').replace(/^0/, '')
   const project = projectForRoom(id)
   const blockId = roomBlocks[id]
-  const title = project ? `${locationById[id]?.label}: ${project.title}` : `${locationById[id]?.label}: sem projeto cadastrado`
-  const activate = () => onZoneSelect?.(blockId)
+  const title = project ? `${locationById[id]?.label}: ${project.title}` : `${locationById[id]?.label}: sem exposição da feira`
+  const activate = () => project && onZoneSelect?.(blockId)
+
+  const content = (
+    <>
+      <title>{title}</title>
+      <rect x={x} y={y} width="70" height="54" rx="10" />
+      <text x={x + 35} y={y + 34} textAnchor="middle">{label}</text>
+      {project && visited.includes(project.id) && <text x={x + 58} y={y + 16} textAnchor="middle" className="map-room-check">✓</text>}
+    </>
+  )
+
+  if (!project) {
+    return <g className={roomClass(id, currentLocation, destinationId, visited)} aria-label={title}>{content}</g>
+  }
 
   return (
-    <g className={roomClass(id, currentLocation, destinationId, visited)} role="button" tabIndex={0} aria-label={title}
-      onClick={activate} onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') activate() }}>
-      <title>{title}</title>
-      <rect x={x} y={y} width="72" height="58" rx="10" />
-      <text x={x + 36} y={y + 36} textAnchor="middle">{label}</text>
-      {project && visited.includes(project.id) && <text x={x + 60} y={y + 17} textAnchor="middle" className="map-room-check">✓</text>}
+    <g
+      className={roomClass(id, currentLocation, destinationId, visited)}
+      role="button"
+      tabIndex={0}
+      aria-label={title}
+      onClick={activate}
+      onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') activate() }}
+    >
+      {content}
     </g>
   )
 }
@@ -61,78 +77,72 @@ function CampusMap({ destinationId, onZoneSelect }: Omit<SchoolMapProps, 'view'>
   const isCurrent = (id: string) => currentLocation === id
   const isDestination = (id: string) => destinationId === id
   const spaceClass = (id: string, base: string) => [base, isCurrent(id) ? 'is-current' : '', isDestination(id) ? 'is-destination' : ''].filter(Boolean).join(' ')
-  const roomLocation = currentLocation?.startsWith('sala-') ? locationById[currentLocation] : null
 
   return (
     <div className="map-shell" aria-label="Mapa geral esquemático da escola">
-      <svg className="school-map campus-map" viewBox="0 0 900 620" role="img" aria-labelledby="campusTitle campusDesc">
+      <svg className="school-map campus-map" viewBox="0 0 760 560" role="img" aria-labelledby="campusTitle campusDesc" preserveAspectRatio="xMidYMid meet">
         <title id="campusTitle">Mapa geral dos espaços da escola</title>
-        <desc id="campusDesc">Mostra entrada dos pais, portão da secretaria, áreas de salas, pátio, cantina e refeitório, quadra, quadra de areia e ligação por escada. O desenho é esquemático e não proporcional.</desc>
+        <desc id="campusDesc">Mostra entrada principal, portão da secretaria, áreas de salas, pátio, cantina e refeitório, quadra, quadra de areia e ligação por escada.</desc>
 
-        <rect x="30" y="28" width="840" height="552" rx="20" className="map-boundary" />
+        <rect x="20" y="20" width="720" height="520" rx="20" className="map-boundary" />
 
         <g className={spaceClass('portao-secretaria', 'map-gate map-gate--secretaria')}>
-          <line x1="30" y1="165" x2="30" y2="245" />
-          <text x="48" y="190" className="map-small">Portão da</text>
-          <text x="48" y="211" className="map-small">Secretaria</text>
+          <line x1="20" y1="62" x2="20" y2="118" />
+          <text x="42" y="55" className="map-gate-label">Portão da Secretaria</text>
         </g>
 
         <g className={spaceClass('entrada-pais', 'map-gate map-gate--entrada')}>
-          <line x1="870" y1="165" x2="870" y2="245" />
-          <text x="852" y="190" textAnchor="end" className="map-small">Entrada de pais</text>
-          <text x="852" y="211" textAnchor="end" className="map-small">e responsáveis</text>
+          <line x1="740" y1="62" x2="740" y2="118" />
+          <text x="718" y="55" textAnchor="end" className="map-gate-label">Entrada de famílias</text>
         </g>
 
         <g className="map-building">
-          <rect x="65" y="65" width="185" height="345" rx="10" />
-          <text x="157" y="205" textAnchor="middle" className="map-title">SALAS</text>
-          <text x="157" y="232" textAnchor="middle" className="map-subtitle">geralmente 2º andar</text>
+          <rect x="55" y="105" width="155" height="290" rx="12" />
+          <text x="132" y="225" textAnchor="middle" className="map-title">SALAS</text>
+          <text x="132" y="253" textAnchor="middle" className="map-subtitle">principalmente</text>
+          <text x="132" y="276" textAnchor="middle">2º andar</text>
         </g>
 
-        <g className={spaceClass('patio', 'map-patio')} onClick={() => onZoneSelect?.('area-externa')}>
-          <rect x="270" y="65" width="195" height="260" rx="10" />
-          <text x="367" y="190" textAnchor="middle" className="map-title">PÁTIO</text>
+        <g className={spaceClass('patio', 'map-patio')} role="button" tabIndex={0}
+          onClick={() => onZoneSelect?.('area-externa')} onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') onZoneSelect?.('area-externa') }}>
+          <rect x="230" y="105" width="160" height="215" rx="12" />
+          <text x="310" y="180" textAnchor="middle" className="map-title">PÁTIO</text>
         </g>
 
         <g className="map-building">
-          <rect x="485" y="65" width="195" height="345" rx="10" />
-          <text x="582" y="168" textAnchor="middle" className="map-title">SALAS</text>
-          <text x="582" y="193" textAnchor="middle" className="map-subtitle">geralmente 2º andar</text>
+          <rect x="410" y="105" width="180" height="290" rx="12" />
+          <text x="500" y="170" textAnchor="middle" className="map-title">SALAS</text>
+          <text x="500" y="198" textAnchor="middle" className="map-subtitle">principalmente 2º andar</text>
           <g className={spaceClass('refeitorio-cantina', 'map-inner-space')} role="button" tabIndex={0}
             onClick={() => onZoneSelect?.('refeitorio')} onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') onZoneSelect?.('refeitorio') }}>
-            <rect x="515" y="285" width="135" height="72" rx="12" />
-            <text x="582" y="314" textAnchor="middle" className="map-small">Cantina / Refeitório</text>
-            <text x="582" y="338" textAnchor="middle" className="map-subtitle">1º andar</text>
-          </g>
+            <rect x="435" y="275" width="130" height="72" rx="12" />
+            <text x="500" y="305" textAnchor="middle" className="map-small">Cantina / Refeitório</text>
+            <text x="500" y="331" textAnchor="middle" className="map-subtitle">1º andar</text>
+        </g>
         </g>
 
         <g className={spaceClass('quadra', 'map-court')}>
-          <rect x="700" y="105" width="135" height="305" rx="10" />
-          <text x="767" y="255" textAnchor="middle" className="map-title">QUADRA</text>
+          <rect x="610" y="125" width="105" height="270" rx="12" />
+          <text x="662" y="265" textAnchor="middle" className="map-title">QUADRA</text>
         </g>
 
         <g className={spaceClass('quadra-areia', 'map-external-zone')} role="button" tabIndex={0}
           onClick={() => onZoneSelect?.('area-externa')} onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') onZoneSelect?.('area-externa') }}>
-          <rect x="270" y="438" width="410" height="105" rx="16" />
-          <text x="475" y="482" textAnchor="middle" className="map-title">PÁTIO + QUADRA DE AREIA</text>
-          <text x="475" y="510" textAnchor="middle" className="map-subtitle">área externa</text>
+          <rect x="230" y="425" width="360" height="78" rx="16" />
+          <text x="410" y="460" textAnchor="middle" className="map-title">PÁTIO + QUADRA DE AREIA</text>
+          <text x="410" y="486" textAnchor="middle" className="map-subtitle">área externa</text>
         </g>
 
         <g className="map-stairs">
-          <path d="M250 300 H300 V265 H430 V300 H485" />
-          <text x="367" y="247" textAnchor="middle" className="map-small">ESCADA / LIGAÇÃO</text>
+          <path d="M210 292 H248 V260 H372 V292 H410" />
+          <text x="310" y="247" textAnchor="middle" className="map-small">ESCADA / LIGAÇÃO</text>
         </g>
 
-        {roomLocation && (
-          <g className="you-are-here">
-            <text x="65" y="556">● Você está em {roomLocation.label}. Veja “Blocos e salas” para localizar a sala.</text>
-          </g>
-        )}
-        {currentLocation === 'entrada-pais' && <text x="690" y="455" className="you-are-here-label">● Você está aqui: entrada dos pais</text>}
+        {currentLocation === 'entrada-pais' && <text x="718" y="82" textAnchor="end" className="you-are-here-label">● Você está aqui</text>}
       </svg>
       <div className="map-caption">
-        <strong>Mapa geral · esquemático e não proporcional.</strong>
-        <span>Este mapa preserva pátio, cantina/refeitório, quadra, quadra de areia e a ligação entre prédios. Para números de salas, use “Blocos e salas”.</span>
+        <strong>Visão geral da escola</strong>
+        <span>Use este mapa para se orientar entre pátio, cantina/refeitório, quadra e áreas de salas.</span>
       </div>
     </div>
   )
@@ -152,69 +162,68 @@ function BlocksMap({ destinationId, onZoneSelect }: Omit<SchoolMapProps, 'view'>
 
   return (
     <div className="map-shell" aria-label="Mapa de blocos e salas">
-      <svg className="school-map rooms-map" viewBox="0 0 900 900" role="img" aria-labelledby="roomsTitle roomsDesc">
+      <svg className="school-map rooms-map" viewBox="0 0 760 800" role="img" aria-labelledby="roomsTitle roomsDesc" preserveAspectRatio="xMidYMid meet">
         <title id="roomsTitle">Mapa dos blocos e salas</title>
-        <desc id="roomsDesc">Bloco 1 com salas 1 a 6, passarela, Bloco 2 com salas 7, 8, 9, 10, 11, 12 e 16, e Bloco 3 com salas 14, 15, 13 e 17. Há portão da secretaria à esquerda e portão de entrada dos pais à direita.</desc>
-        <rect x="70" y="35" width="760" height="830" rx="10" className="map-boundary" />
+        <desc id="roomsDesc">Bloco 1 com salas 1 a 6, passarela, Bloco 2 com salas 7, 8, 9, 10, 11, 12 e 16, e Bloco 3 com salas 13, 14, 15 e 17. O portão da Secretaria fica à esquerda e a entrada de famílias à direita.</desc>
+        <rect x="20" y="20" width="720" height="760" rx="16" className="map-boundary" />
 
         <g className="map-gate map-gate--secretaria">
-          <line x1="70" y1="165" x2="70" y2="255" />
-          <text x="88" y="188" className="map-small">Portão da</text>
-          <text x="88" y="211" className="map-small">Secretaria</text>
+          <line x1="20" y1="58" x2="20" y2="112" />
+          <text x="42" y="52" className="map-gate-label">Secretaria</text>
         </g>
         <g className={currentLocation === 'entrada-pais' ? 'map-gate map-gate--entrada is-current' : 'map-gate map-gate--entrada'}>
-          <line x1="830" y1="165" x2="830" y2="255" />
-          <text x="812" y="188" textAnchor="end" className="map-small">Portão de Entrada</text>
-          <text x="812" y="211" textAnchor="end" className="map-small">pais/responsáveis</text>
+          <line x1="740" y1="58" x2="740" y2="112" />
+          <text x="718" y="52" textAnchor="end" className="map-gate-label">Entrada de famílias</text>
+          {currentLocation === 'entrada-pais' && <text x="718" y="76" textAnchor="end" className="you-are-here-label">● Você está aqui</text>}
         </g>
 
-        <g className={blockClass('bloco-01')} role="button" tabIndex={0} aria-label={`Bloco 1, ${blockProjects('bloco-01').length} projetos`}
+        <g className={blockClass('bloco-01')} role="button" tabIndex={0} aria-label={`Bloco 1, ${blockProjects('bloco-01').length} exposições`}
           onClick={() => activate('bloco-01')} onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') activate('bloco-01') }}>
-          <rect x="120" y="80" width="610" height="215" rx="20" />
-          <text x="425" y="125" textAnchor="middle" className="map-block-title">Bloco 1</text>
-          <Room id="sala-01" x={155} y={175} {...roomProps} />
-          <Room id="sala-02" x={245} y={175} {...roomProps} />
-          <Room id="sala-03" x={335} y={175} {...roomProps} />
-          <Room id="sala-04" x={425} y={175} {...roomProps} />
-          <Room id="sala-05" x={515} y={175} {...roomProps} />
-          <Room id="sala-06" x={605} y={175} {...roomProps} />
+          <rect x="70" y="90" width="620" height="185" rx="20" />
+          <text x="380" y="132" textAnchor="middle" className="map-block-title">Bloco 1</text>
+          <Room id="sala-01" x={95} y={180} {...roomProps} />
+          <Room id="sala-02" x={190} y={180} {...roomProps} />
+          <Room id="sala-03" x={285} y={180} {...roomProps} />
+          <Room id="sala-04" x={380} y={180} {...roomProps} />
+          <Room id="sala-05" x={475} y={180} {...roomProps} />
+          <Room id="sala-06" x={570} y={180} {...roomProps} />
         </g>
 
         <g className="map-walkway">
-          <rect x="345" y="295" width="92" height="105" rx="10" />
-          <text x="455" y="352" className="map-small">Passarela</text>
+          <rect x="330" y="275" width="100" height="75" rx="12" />
+          <text x="380" y="320" textAnchor="middle" className="map-small">Passarela</text>
         </g>
 
-        <g className={blockClass('bloco-02')} role="button" tabIndex={0} aria-label={`Bloco 2, ${blockProjects('bloco-02').length} projetos`}
+        <g className={blockClass('bloco-02')} role="button" tabIndex={0} aria-label={`Bloco 2, ${blockProjects('bloco-02').length} exposições`}
           onClick={() => activate('bloco-02')} onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') activate('bloco-02') }}>
-          <rect x="100" y="400" width="700" height="225" rx="20" />
-          <text x="450" y="447" textAnchor="middle" className="map-block-title">Bloco 2</text>
-          <Room id="sala-07" x={140} y={510} {...roomProps} />
-          <Room id="sala-08" x={230} y={510} {...roomProps} />
-          <Room id="sala-09" x={320} y={510} {...roomProps} />
-          <Room id="sala-10" x={450} y={510} {...roomProps} />
-          <Room id="sala-11" x={540} y={510} {...roomProps} />
-          <Room id="sala-12" x={630} y={510} {...roomProps} />
-          <Room id="sala-16" x={720} y={510} {...roomProps} />
+          <rect x="50" y="360" width="660" height="210" rx="20" />
+          <text x="380" y="405" textAnchor="middle" className="map-block-title">Bloco 2</text>
+          <Room id="sala-07" x={65} y={485} {...roomProps} />
+          <Room id="sala-08" x={155} y={485} {...roomProps} />
+          <Room id="sala-09" x={245} y={485} {...roomProps} />
+          <Room id="sala-10" x={335} y={485} {...roomProps} />
+          <Room id="sala-11" x={425} y={485} {...roomProps} />
+          <Room id="sala-12" x={515} y={485} {...roomProps} />
+          <Room id="sala-16" x={605} y={485} {...roomProps} />
         </g>
 
-        <g className={blockClass('bloco-03')} role="button" tabIndex={0} aria-label={`Bloco 3, ${blockProjects('bloco-03').length} projetos`}
+        <g className={blockClass('bloco-03')} role="button" tabIndex={0} aria-label={`Bloco 3, ${blockProjects('bloco-03').length} exposições`}
           onClick={() => activate('bloco-03')} onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') activate('bloco-03') }}>
-          <rect x="120" y="665" width="500" height="170" rx="20" />
-          <text x="370" y="708" textAnchor="middle" className="map-block-title">Bloco 3</text>
-          <Room id="sala-14" x={155} y={745} {...roomProps} />
-          <Room id="sala-15" x={305} y={745} {...roomProps} />
-          <Room id="sala-13" x={395} y={745} {...roomProps} />
-          <Room id="sala-17" x={485} y={745} {...roomProps} />
+          <rect x="120" y="605" width="450" height="145" rx="20" />
+          <text x="345" y="647" textAnchor="middle" className="map-block-title">Bloco 3</text>
+          <Room id="sala-14" x={145} y={675} {...roomProps} />
+          <Room id="sala-15" x={255} y={675} {...roomProps} />
+          <Room id="sala-13" x={365} y={675} {...roomProps} />
+          <Room id="sala-17" x={475} y={675} {...roomProps} />
         </g>
       </svg>
       <div className="map-caption">
-        <strong>Blocos e salas · referência de circulação.</strong>
-        <span>Salas com exposição ficam destacadas. Salas 09, 10 e 17 aparecem apenas como referência porque não possuem projeto cadastrado no documento da feira.</span>
+        <strong>Blocos e salas</strong>
+        <span>Toque em um bloco ou em uma sala destacada para ver as exposições. As salas 09, 10 e 17 servem apenas como referência de localização.</span>
       </div>
       <div className="map-legend" aria-label="Legenda do mapa">
-        <span><i className="legend-swatch legend-swatch--project" /> Projeto da feira</span>
-        <span><i className="legend-swatch legend-swatch--neutral" /> Sem projeto</span>
+        <span><i className="legend-swatch legend-swatch--project" /> Exposição da feira</span>
+        <span><i className="legend-swatch legend-swatch--neutral" /> Referência</span>
         <span><i className="legend-swatch legend-swatch--current" /> Você está aqui</span>
         <span><i className="legend-swatch legend-swatch--destination" /> Seu destino</span>
       </div>

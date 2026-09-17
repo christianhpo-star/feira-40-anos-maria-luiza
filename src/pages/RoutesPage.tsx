@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { PageHeader } from '../components/PageHeader'
 import { RouteCard } from '../components/RouteCard'
 import { routes } from '../data/routes'
@@ -18,10 +19,13 @@ export function RoutesPage() {
           {routes.slice(2).map((route) => <RouteCard key={route.id} route={route} />)}
         </div>
       </section>
-      <section className="notice notice--soft">
-        <strong>Viagem no tempo</strong>
-        <p>Prefere explorar por marcos históricos em vez de salas?</p>
-        <a href="/tempo">Abrir linha do tempo →</a>
+      <section className="feature-link-card">
+        <div>
+          <span className="eyebrow">Outra forma de explorar</span>
+          <strong>Viagem no tempo</strong>
+          <p>Conheça os projetos pelos acontecimentos e transformações que marcaram diferentes épocas.</p>
+        </div>
+        <Link className="button button--secondary" to="/tempo">Abrir linha do tempo</Link>
       </section>
     </main>
   )

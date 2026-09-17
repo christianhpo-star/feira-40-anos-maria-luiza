@@ -3,13 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="theme-color" content="#6d2c7d" />
+    <meta name="theme-color" content="#901d73" />
     <meta name="description" content="Passaporte Digital da Feira do Conhecimento - 40 Anos Conectando Histórias" />
     <link rel="manifest" href="/manifest.webmanifest" />
-    <link rel="icon" href="/icons/icon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/icons/icon-192.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/icons/icon-192.png" />
     <title>40 Anos Conectando Histórias</title>
     <style>
-      /* Evita que o link de acessibilidade apareca sem estilo antes do React/CSS carregar. */
       .skip-link {
         position: fixed;
         left: 12px;
@@ -34,12 +34,12 @@
         background: #fff;
         box-shadow: 0 10px 30px rgba(52, 35, 68, .08);
       }
-      html.is-local-file #local-file-help h1 { color: #6d2c7d; margin-top: 0; }
+      html.is-local-file #local-file-help h1 { color: #901d73; margin-top: 0; }
       html.is-local-file #local-file-help code {
         display: inline-block;
         padding: 2px 6px;
         border-radius: 6px;
-        background: #f2edf7;
+        background: #f7edf4;
       }
     </style>
     <script>
@@ -49,14 +49,14 @@
     </script>
   </head>
   <body>
-    <a class="skip-link" href="#conteudo">Pular para o conteudo</a>
+    <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
     <div id="root"></div>
     <div id="local-file-help" role="status" aria-live="polite">
       <div class="card">
         <h1>Passaporte Digital da Feira</h1>
-        <p>Este arquivo faz parte de uma aplicacao React/Vite e nao deve ser aberto diretamente com duplo clique em <code>index.html</code>.</p>
-        <p>No Windows, execute <strong>INICIAR_APP_LOCAL.bat</strong>. O script instala as dependencias na primeira execucao, inicia o servidor local e abre o aplicativo no navegador.</p>
-        <p>Quando publicado no Cloudflare Pages, o acesso sera direto pelo QR Code e esta mensagem nao aparecera.</p>
+        <p>Este arquivo faz parte de uma aplicação React/Vite e não deve ser aberto diretamente com duplo clique em <code>index.html</code>.</p>
+        <p>No Windows, execute <strong>INICIAR_APP_LOCAL.bat</strong>. Na primeira execução, o script instala as dependências, inicia o servidor local e abre o aplicativo no navegador.</p>
+        <p>Na versão publicada, o acesso é feito normalmente pelo endereço do site ou pelo QR Code.</p>
       </div>
     </div>
     <script type="module" src="/src/main.tsx"></script>
