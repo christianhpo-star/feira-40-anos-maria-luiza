@@ -1,0 +1,18 @@
+{
+  "name": "40 Anos Conectando Histórias",
+  "short_name": "Feira 40 Anos",
+  "description": "Passaporte Digital da Feira do Conhecimento da E.E. Maria Luiza Miranda Bastos",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f7f5fb",
+  "theme_color": "#6d2c7d",
+  "lang": "pt-BR",
+  "icons": [
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
