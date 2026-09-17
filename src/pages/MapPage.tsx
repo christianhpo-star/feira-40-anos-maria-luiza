@@ -79,8 +79,8 @@ export function MapPage() {
       <section className="visitor-tip visitor-tip--attention">
         <span aria-hidden="true">↟</span>
         <div>
-          <strong>Circulação pela escola</strong>
-          <p>As exposições em salas ficam, em sua maioria, no 2º andar. Se precisar de apoio para circular pela escola, procure nossa equipe.</p>
+          <strong>1º e 2º andar</strong>
+          <p>A visão geral identifica as áreas de salas no 2º andar e a Cantina/Refeitório no 1º andar. Se precisar de apoio para circular pela escola, procure nossa equipe.</p>
         </div>
       </section>
 

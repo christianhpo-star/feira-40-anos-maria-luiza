@@ -82,7 +82,7 @@ function CampusMap({ destinationId, onZoneSelect }: Omit<SchoolMapProps, 'view'>
     <div className="map-shell" aria-label="Mapa geral esquemático da escola">
       <svg className="school-map campus-map" viewBox="0 0 760 560" role="img" aria-labelledby="campusTitle campusDesc" preserveAspectRatio="xMidYMid meet">
         <title id="campusTitle">Mapa geral dos espaços da escola</title>
-        <desc id="campusDesc">Mostra entrada principal, portão da secretaria, áreas de salas, pátio, cantina e refeitório, quadra, quadra de areia e ligação por escada.</desc>
+        <desc id="campusDesc">Mostra entrada principal, portão da secretaria, áreas de salas no segundo andar, pátio, cantina e refeitório no primeiro andar, quadra, quadra de areia e ligação por escada.</desc>
 
         <rect x="20" y="20" width="720" height="520" rx="20" className="map-boundary" />
 
@@ -98,9 +98,8 @@ function CampusMap({ destinationId, onZoneSelect }: Omit<SchoolMapProps, 'view'>
 
         <g className="map-building">
           <rect x="55" y="105" width="155" height="290" rx="12" />
-          <text x="132" y="225" textAnchor="middle" className="map-title">SALAS</text>
-          <text x="132" y="253" textAnchor="middle" className="map-subtitle">principalmente</text>
-          <text x="132" y="276" textAnchor="middle">2º andar</text>
+          <text x="132" y="220" textAnchor="middle" className="map-floor-label">2º ANDAR</text>
+          <text x="132" y="255" textAnchor="middle" className="map-title">SALAS</text>
         </g>
 
         <g className={spaceClass('patio', 'map-patio')} role="button" tabIndex={0}
@@ -111,14 +110,15 @@ function CampusMap({ destinationId, onZoneSelect }: Omit<SchoolMapProps, 'view'>
 
         <g className="map-building">
           <rect x="410" y="105" width="180" height="290" rx="12" />
-          <text x="500" y="170" textAnchor="middle" className="map-title">SALAS</text>
-          <text x="500" y="198" textAnchor="middle" className="map-subtitle">principalmente 2º andar</text>
+          <text x="500" y="155" textAnchor="middle" className="map-floor-label">2º ANDAR</text>
+          <text x="500" y="190" textAnchor="middle" className="map-title">SALAS</text>
           <g className={spaceClass('refeitorio-cantina', 'map-inner-space')} role="button" tabIndex={0}
             onClick={() => onZoneSelect?.('refeitorio')} onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') onZoneSelect?.('refeitorio') }}>
-            <rect x="435" y="275" width="130" height="72" rx="12" />
-            <text x="500" y="305" textAnchor="middle" className="map-small">Cantina / Refeitório</text>
-            <text x="500" y="331" textAnchor="middle" className="map-subtitle">1º andar</text>
-        </g>
+            <rect x="435" y="260" width="130" height="100" rx="12" />
+            <text x="500" y="288" textAnchor="middle" className="map-floor-label">1º ANDAR</text>
+            <text x="500" y="317" textAnchor="middle" className="map-small">CANTINA /</text>
+            <text x="500" y="341" textAnchor="middle" className="map-small">REFEITÓRIO</text>
+          </g>
         </g>
 
         <g className={spaceClass('quadra', 'map-court')}>
@@ -142,7 +142,7 @@ function CampusMap({ destinationId, onZoneSelect }: Omit<SchoolMapProps, 'view'>
       </svg>
       <div className="map-caption">
         <strong>Visão geral da escola</strong>
-        <span>Use este mapa para se orientar entre pátio, cantina/refeitório, quadra e áreas de salas.</span>
+        <span>2º andar: áreas de salas · 1º andar: Cantina/Refeitório.</span>
       </div>
     </div>
   )
