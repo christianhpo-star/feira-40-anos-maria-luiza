@@ -7,7 +7,7 @@ export function PageHeader({ title, subtitle, backTo }: { title: string; subtitl
         {backTo ? (
           <Link className="icon-button" to={backTo} aria-label="Voltar">←</Link>
         ) : (
-          <span className="header-logo" aria-hidden="true" />
+          <img className="header-logo" src="/images/logo-escola.png?v=20260925-4" alt="" aria-hidden="true" />
         )}
         <div className="page-header__text">
           <h1>{title}</h1>
