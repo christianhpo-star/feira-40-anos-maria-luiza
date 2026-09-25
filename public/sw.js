@@ -1,4 +1,4 @@
-const CACHE = 'feira-40-anos-v3'
+const CACHE = 'feira-40-anos-v6'
 const CORE = [
   '/',
   '/manifest.webmanifest',
