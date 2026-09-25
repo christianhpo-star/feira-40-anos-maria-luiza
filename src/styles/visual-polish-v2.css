@@ -1294,3 +1294,68 @@ body {
     font-size: 13px;
   }
 }
+
+
+/* Andares do Bloco 1 */
+.map-floor-divider {
+  stroke: rgba(9, 49, 112, .22);
+  stroke-width: 1.5;
+  stroke-dasharray: 6 6;
+}
+
+.map-floor-band-label {
+  fill: var(--blue);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: .055em;
+}
+
+.map-reference-space rect {
+  fill: #f7f7f8;
+  stroke: #c8cbd2;
+  stroke-width: 1.8;
+}
+
+.map-reference-label,
+.map-tiny {
+  fill: #5f6573;
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: .01em;
+  pointer-events: none;
+}
+
+.map-lab-campus rect {
+  fill: #fff7e6;
+  stroke: #b97816;
+  stroke-width: 2;
+  cursor: pointer;
+}
+
+.map-lab-campus.is-current rect {
+  fill: #d9f4e4;
+  stroke: var(--green);
+  stroke-width: 4;
+}
+
+.map-lab-campus.is-destination rect {
+  fill: #fff1d2;
+  stroke: #d88a12;
+  stroke-width: 4;
+}
+
+.map-lab-campus:focus rect {
+  stroke: var(--blue);
+  stroke-width: 4;
+}
+
+@media (min-width: 620px) {
+  .map-floor-band-label {
+    font-size: 13px;
+  }
+
+  .map-reference-label,
+  .map-tiny {
+    font-size: 11px;
+  }
+}
