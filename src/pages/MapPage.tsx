@@ -12,6 +12,7 @@ const groupLabels: Record<string, string> = {
   'bloco-02': 'Bloco 2',
   'bloco-03': 'Bloco 3',
   refeitorio: 'Refeitório / Cantina',
+  laboratorio: 'Laboratório de Química',
   'area-externa': 'Área externa'
 }
 
@@ -31,6 +32,8 @@ export function MapPage() {
 
   const zoneProjects = useMemo(() => {
     if (!zone) return []
+    if (zone === 'laboratorio') return projects.filter((project) => project.locationIds.includes('laboratorio-ciencias'))
+    if (zone === 'bloco-01') return projects.filter((project) => project.blockId === zone || project.locationIds.includes('laboratorio-ciencias'))
     return projects.filter((project) => project.blockId === zone)
   }, [zone])
 
