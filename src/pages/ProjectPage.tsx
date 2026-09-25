@@ -5,6 +5,7 @@ import { useProgress } from '../context/ProgressContext'
 import { projectById } from '../data/projects'
 import { locationById } from '../data/locations'
 import { routeById } from '../data/routes'
+import { getProjectVisualTone, projectToneLabel } from '../utils/projectVisual'
 
 export function ProjectPage() {
   const { projectId } = useParams()
@@ -21,6 +22,7 @@ export function ProjectPage() {
   if (!project) return <main id="conteudo" className="page"><PageHeader title="Projeto não encontrado" backTo="/projetos" /></main>
 
   const isVisited = visited.includes(project.id)
+  const tone = getProjectVisualTone(project)
   const route = activeRoute ? routeById[activeRoute] : null
   const currentIndex = route?.projectIds.indexOf(project.id) ?? -1
   const projectIsInRoute = Boolean(route && currentIndex >= 0)
@@ -35,17 +37,25 @@ export function ProjectPage() {
   }
 
   return (
-    <main id="conteudo" className="page project-detail">
+    <main id="conteudo" className={`page project-detail project-tone--${tone}`}>
       <PageHeader title={project.roomLabel} subtitle={project.blockLabel} backTo={backTo} />
 
       {qrLocation && locationById[qrLocation] && (
         <div className="location-confirm" role="status">⌖ Você está em <strong>{locationById[qrLocation].label}</strong></div>
       )}
 
-      <section className="project-title-card">
+      <section className="project-title-card project-title-card--poster">
+        <div className="project-title-card__poster-head">
+          <span className="project-title-card__theme">{projectToneLabel[tone]}</span>
+          <span className="project-title-card__years">{project.timeAnchor}</span>
+        </div>
+        <div className="project-title-card__poster-mark" aria-hidden="true">40</div>
         <span className="eyebrow">{project.className}</span>
         <h2>{project.title}</h2>
         <p>{project.shortSummary}</p>
+        <div className="project-title-card__footerline" aria-hidden="true">
+          <span>1986</span><i /><span>2026</span><i /><span>Futuro</span>
+        </div>
       </section>
 
       <section className="info-panel">

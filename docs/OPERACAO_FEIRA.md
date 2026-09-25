@@ -47,6 +47,7 @@ A lista canônica de projetos está em `src/data/projects.ts`.
 
 - 1º andar: Cantina / Refeitório.
 - 2º andar: salas de exposição.
+- Bloco 1 · 1º andar: Laboratório de Química → Sala dos Professores → Vice-direção → Secretaria.
 - O acesso ao 2º andar é por escadas.
 - A escola não possui elevador ou rampa para esse pavimento.
 
@@ -60,3 +61,24 @@ Manter na entrada:
 - URL curta da aplicação escrita abaixo do QR.
 
 Assim, uma falha de câmera, internet ou QR não interrompe a visita.
+
+
+## Modelo atual do mapa
+
+A página de mapa possui dois modos:
+
+1. **Mapa geral**
+   - sub-abas **2º andar** e **1º andar**;
+   - os três blocos usam o mesmo formato retangular e a mesma escala entre os pavimentos;
+   - 2º andar: Bloco 1 salas 01–06; Bloco 2 salas 07–12 e 16; Bloco 3 salas 14, 15, 13 e 17;
+   - 1º andar:
+     - Bloco 1: Laboratório de Química → Sala dos Professores → Vice-direção → Secretaria;
+     - Bloco 2: Cantina → Refeitório (com escada) → Xerox / Sala de Reunião;
+     - Bloco 3: Biblioteca + Escada do Bloco 3.
+
+2. **Salas de apresentação**
+   - seleção dinâmica por Bloco 1, 2 ou 3;
+   - mostra somente as salas usadas como referência de apresentação;
+   - mantém os estados de exposição, visitado, localização atual e destino.
+
+Não voltar a misturar 1º e 2º andar no mesmo desenho do Bloco 1.

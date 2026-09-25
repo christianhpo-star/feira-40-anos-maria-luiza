@@ -5,13 +5,14 @@ import { ProjectCard } from '../components/ProjectCard'
 import { useProgress } from '../context/ProgressContext'
 import { projects } from '../data/projects'
 import { locationById } from '../data/locations'
-import { SchoolMap, type SchoolMapView } from '../map/SchoolMap'
+import { SchoolMap, type GeneralFloor, type SchoolMapView } from '../map/SchoolMap'
 
 const groupLabels: Record<string, string> = {
   'bloco-01': 'Bloco 1',
   'bloco-02': 'Bloco 2',
   'bloco-03': 'Bloco 3',
-  refeitorio: 'Refeitório / Cantina',
+  refeitorio: 'Refeitório',
+  laboratorio: 'Laboratório de Química',
   'area-externa': 'Área externa'
 }
 
@@ -23,14 +24,25 @@ export function MapPage() {
   const { currentLocation, visited, setCurrentLocation } = useProgress()
   const currentLocationData = currentLocation ? locationById[currentLocation] : null
   const [view, setView] = useState<SchoolMapView>(initialView)
+  const lowerFloorDestination = destination && ['laboratorio-ciencias', 'refeitorio-cantina', 'cantina', 'xerox', 'sala-reuniao', 'biblioteca'].includes(destination)
+  const [generalFloor, setGeneralFloor] = useState<GeneralFloor>(lowerFloorDestination ? 'lower' : 'upper')
   const [zone, setZone] = useState<string | null>(null)
 
   useEffect(() => {
-    if (destination?.startsWith('sala-')) setView('rooms')
+    if (destination?.startsWith('sala-')) {
+      setView('rooms')
+      return
+    }
+    if (destination && ['laboratorio-ciencias', 'refeitorio-cantina', 'cantina', 'xerox', 'sala-reuniao', 'biblioteca'].includes(destination)) {
+      setView('campus')
+      setGeneralFloor('lower')
+    }
   }, [destination])
 
   const zoneProjects = useMemo(() => {
     if (!zone) return []
+    if (zone === 'laboratorio') return projects.filter((project) => project.locationIds.includes('laboratorio-ciencias'))
+    if (zone === 'bloco-01') return projects.filter((project) => project.blockId === zone || project.locationIds.includes('laboratorio-ciencias'))
     return projects.filter((project) => project.blockId === zone)
   }, [zone])
 
@@ -46,8 +58,8 @@ export function MapPage() {
       )}
 
       <div className="floor-summary" aria-label="Resumo dos andares">
-        <span><strong>1º andar</strong>Cantina / Refeitório</span>
-        <span><strong>2º andar</strong>Salas de exposição</span>
+        <span><strong>1º andar</strong>Áreas de apoio, convivência e circulação dos três blocos</span>
+        <span><strong>2º andar</strong>Salas de apresentação da feira</span>
       </div>
 
       {destinationLocation && (
@@ -60,14 +72,41 @@ export function MapPage() {
 
       <div className="map-view-tabs" role="tablist" aria-label="Escolher tipo de mapa">
         <button type="button" className={view === 'campus' ? 'map-view-tab is-active' : 'map-view-tab'} onClick={() => setView('campus')} role="tab" aria-selected={view === 'campus'}>
-          Visão geral
+          Mapa geral
         </button>
         <button type="button" className={view === 'rooms' ? 'map-view-tab is-active' : 'map-view-tab'} onClick={() => setView('rooms')} role="tab" aria-selected={view === 'rooms'}>
-          Blocos e salas
+          Salas de apresentação
         </button>
       </div>
 
-      <SchoolMap view={view} destinationId={destination} onZoneSelect={setZone} />
+      {view === 'campus' && (
+        <div className="map-floor-subtabs" role="tablist" aria-label="Escolher andar do mapa geral">
+          <button
+            type="button"
+            className={generalFloor === 'upper' ? 'map-floor-subtab is-active' : 'map-floor-subtab'}
+            onClick={() => setGeneralFloor('upper')}
+            role="tab"
+            aria-selected={generalFloor === 'upper'}
+          >
+            <strong>2º andar</strong>
+            <small>salas</small>
+          </button>
+          <button
+            type="button"
+            className={generalFloor === 'lower' ? 'map-floor-subtab is-active' : 'map-floor-subtab'}
+            onClick={() => setGeneralFloor('lower')}
+            role="tab"
+            aria-selected={generalFloor === 'lower'}
+          >
+            <strong>1º andar</strong>
+            <small>apoio e convivência</small>
+          </button>
+        </div>
+      )}
+
+      <div className={`map-view-panel map-view-panel--${view}`}>
+        <SchoolMap view={view} generalFloor={generalFloor} destinationId={destination} onZoneSelect={setZone} />
+      </div>
 
       {zone && (
         <section className="section-block map-projects-panel" aria-live="polite">

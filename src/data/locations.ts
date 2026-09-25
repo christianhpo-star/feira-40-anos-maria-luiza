@@ -29,21 +29,21 @@ export const locations: Location[] = [
     id: 'bloco-01-oeste',
     label: 'Bloco 1',
     shortLabel: 'Bloco 1',
-    description: 'Bloco com as salas 01, 02, 03, 04, 05 e 06.',
+    description: 'No 2º andar ficam as salas 01 a 06. No 1º andar, em sequência, ficam Laboratório de Química, Sala dos Professores, Vice-direção e Secretaria.',
     zone: 'west'
   },
   {
     id: 'bloco-02-central',
     label: 'Bloco 2',
     shortLabel: 'Bloco 2',
-    description: 'Bloco com as salas 07, 08, 09, 10, 11, 12 e 16.',
+    description: 'No 2º andar ficam as salas 07, 08, 09, 10, 11, 12 e 16. No 1º andar ficam Cantina, Refeitório, escada, Xerox e Sala de Reunião.',
     zone: 'central'
   },
   {
     id: 'bloco-03-direita',
     label: 'Bloco 3',
     shortLabel: 'Bloco 3',
-    description: 'Bloco com as salas 13, 14, 15 e 17.',
+    description: 'No 2º andar ficam as salas 14, 15, 13 e 17. No 1º andar fica a Biblioteca e a escada do Bloco 3.',
     zone: 'right'
   },
   {
@@ -86,18 +86,91 @@ export const locations: Location[] = [
   },
   {
     id: 'refeitorio-cantina',
-    label: 'Refeitório / Cantina',
+    label: 'Refeitório',
     shortLabel: 'Refeitório',
-    description: 'Espaço do refeitório e da cantina.',
+    description: 'Refeitório localizado no 1º andar do Bloco 2, abaixo da Cantina.',
     zone: 'central',
     floor: '1º andar'
   },
   {
+    id: 'cantina',
+    label: 'Cantina',
+    shortLabel: 'Cantina',
+    description: 'Cantina localizada no 1º andar do Bloco 2, acima do Refeitório.',
+    zone: 'central',
+    floor: '1º andar'
+  },
+  {
+    id: 'xerox',
+    label: 'Xerox',
+    shortLabel: 'Xerox',
+    description: 'Espaço de Xerox localizado na parte inferior do 1º andar do Bloco 2.',
+    zone: 'central',
+    floor: '1º andar'
+  },
+  {
+    id: 'sala-reuniao',
+    label: 'Sala de Reunião',
+    shortLabel: 'Reunião',
+    description: 'Sala de Reunião localizada na parte inferior do 1º andar do Bloco 2.',
+    zone: 'central',
+    floor: '1º andar'
+  },
+  {
+    id: 'biblioteca',
+    label: 'Biblioteca',
+    shortLabel: 'Biblioteca',
+    description: 'Biblioteca localizada na parte superior do 1º andar do Bloco 3.',
+    zone: 'right',
+    floor: '1º andar'
+  },
+  {
+    id: 'escada-bloco-02',
+    label: 'Escada do Bloco 2',
+    shortLabel: 'Escada B2',
+    description: 'Escada indicada junto ao Refeitório no 1º andar do Bloco 2.',
+    zone: 'connector',
+    floor: '1º andar'
+  },
+  {
+    id: 'escada-bloco-03',
+    label: 'Escada do Bloco 3',
+    shortLabel: 'Escada B3',
+    description: 'Escada de acesso do Bloco 3 indicada no 1º andar.',
+    zone: 'connector',
+    floor: '1º andar'
+  },
+  {
     id: 'laboratorio-ciencias',
-    label: 'Laboratório de Ciências',
-    shortLabel: 'Laboratório',
-    description: 'Laboratório de Ciências da escola.',
-    zone: 'unknown'
+    label: 'Laboratório de Química',
+    shortLabel: 'Lab. Química',
+    description: 'Laboratório de Química localizado no 1º andar do Bloco 1, ao lado da Sala dos Professores.',
+    zone: 'west',
+    floor: '1º andar'
+  },
+  {
+    id: 'sala-professores',
+    label: 'Sala dos Professores',
+    shortLabel: 'Professores',
+    description: 'Sala dos Professores localizada no 1º andar do Bloco 1, entre o Laboratório de Química e a Vice-direção.',
+    zone: 'west',
+    floor: '1º andar'
+  },
+  {
+    id: 'vice-direcao',
+    label: 'Vice-direção',
+    shortLabel: 'Vice-direção',
+    description: 'Vice-direção localizada no 1º andar do Bloco 1, entre a Sala dos Professores e a Secretaria.',
+    zone: 'west',
+    floor: '1º andar'
+  },
+  {
+    id: 'secretaria-escolar',
+    label: 'Secretaria',
+    shortLabel: 'Secretaria',
+    description: 'Secretaria localizada no 1º andar do Bloco 1, abaixo da Vice-direção na sequência do corredor.',
+    zone: 'west',
+    floor: '1º andar'
   },
   ...['01', '02', '03', '04', '05', '06'].map((n) => room(`sala-${n}`, `Sala ${n}`, 'west')),
   ...['07', '08', '09', '10', '11', '12', '16'].map((n) => room(`sala-${n}`, `Sala ${n}`, 'central')),
