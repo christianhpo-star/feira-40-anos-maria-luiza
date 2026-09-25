@@ -1242,3 +1242,55 @@ body {
     flex-basis: 74px;
   }
 }
+
+
+/* Laboratório de Química — Bloco 1 */
+.map-lab-space {
+  cursor: pointer;
+}
+
+.map-lab-space rect {
+  fill: #fff7e6;
+  stroke: #b97816;
+  stroke-width: 2;
+}
+
+.map-lab-space text {
+  pointer-events: none;
+}
+
+.map-lab-label {
+  fill: #6c4a11;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: .025em;
+}
+
+.map-lab-space.is-visited rect {
+  fill: #e8f6ed;
+  stroke: var(--green);
+}
+
+.map-lab-space.is-current rect {
+  fill: #d9f4e4;
+  stroke: var(--green);
+  stroke-width: 4;
+}
+
+.map-lab-space.is-destination rect {
+  fill: #fff1d2;
+  stroke: #d88a12;
+  stroke-width: 4;
+}
+
+.map-lab-space:focus rect {
+  outline: none;
+  stroke: var(--blue);
+  stroke-width: 4;
+}
+
+@media (min-width: 620px) {
+  .map-lab-label {
+    font-size: 13px;
+  }
+}
