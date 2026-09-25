@@ -11,7 +11,7 @@ const groupLabels: Record<string, string> = {
   'bloco-01': 'Bloco 1',
   'bloco-02': 'Bloco 2',
   'bloco-03': 'Bloco 3',
-  refeitorio: 'Refeitório / Cantina',
+  refeitorio: 'Refeitório',
   laboratorio: 'Laboratório de Química',
   'area-externa': 'Área externa'
 }
