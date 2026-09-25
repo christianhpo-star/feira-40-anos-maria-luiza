@@ -11,7 +11,7 @@ interface SchoolMapProps {
 }
 
 const roomBlocks: Record<string, string> = {
-  'sala-01': 'bloco-01', 'sala-02': 'bloco-01', 'sala-03': 'bloco-01', 'sala-04': 'bloco-01', 'sala-05': 'bloco-01', 'sala-06': 'bloco-01',
+  'sala-01': 'bloco-01', 'sala-02': 'bloco-01', 'sala-03': 'bloco-01', 'sala-04': 'bloco-01', 'sala-05': 'bloco-01', 'sala-06': 'bloco-01', 'laboratorio-ciencias': 'bloco-01',
   'sala-07': 'bloco-02', 'sala-08': 'bloco-02', 'sala-09': 'bloco-02', 'sala-10': 'bloco-02', 'sala-11': 'bloco-02', 'sala-12': 'bloco-02', 'sala-16': 'bloco-02',
   'sala-14': 'bloco-03', 'sala-15': 'bloco-03', 'sala-13': 'bloco-03', 'sala-17': 'bloco-03'
 }
@@ -159,12 +159,21 @@ function BlocksMap({ destinationId, onZoneSelect }: Omit<SchoolMapProps, 'view'>
   }
 
   const roomProps = { currentLocation, destinationId, visited, onZoneSelect }
+  const labProject = projectForRoom('laboratorio-ciencias')
+  const labVisited = labProject ? visited.includes(labProject.id) : false
+  const labClass = [
+    'map-lab-space',
+    labProject ? 'has-project' : '',
+    labVisited ? 'is-visited' : '',
+    currentLocation === 'laboratorio-ciencias' ? 'is-current' : '',
+    destinationId === 'laboratorio-ciencias' ? 'is-destination' : ''
+  ].filter(Boolean).join(' ')
 
   return (
     <div className="map-shell" aria-label="Mapa de blocos e salas">
       <svg className="school-map rooms-map" viewBox="0 0 760 800" role="img" aria-labelledby="roomsTitle roomsDesc" preserveAspectRatio="xMidYMid meet">
         <title id="roomsTitle">Mapa dos blocos e salas</title>
-        <desc id="roomsDesc">Bloco 1 com salas 1 a 6, passarela, Bloco 2 com salas 7, 8, 9, 10, 11, 12 e 16, e Bloco 3 com salas 13, 14, 15 e 17. O portão da Secretaria fica à esquerda e a entrada de famílias à direita.</desc>
+        <desc id="roomsDesc">Bloco 1 com salas 1 a 6 e o Laboratório de Química abaixo das salas 4, 5 e 6; passarela; Bloco 2 com salas 7, 8, 9, 10, 11, 12 e 16; e Bloco 3 com salas 13, 14, 15 e 17. O portão da Secretaria fica à esquerda e a entrada de famílias à direita.</desc>
         <rect x="20" y="20" width="720" height="760" rx="16" className="map-boundary" />
 
         <g className="map-gate map-gate--secretaria">
@@ -187,6 +196,19 @@ function BlocksMap({ destinationId, onZoneSelect }: Omit<SchoolMapProps, 'view'>
           <Room id="sala-04" x={380} y={180} {...roomProps} />
           <Room id="sala-05" x={475} y={180} {...roomProps} />
           <Room id="sala-06" x={570} y={180} {...roomProps} />
+          <g
+            className={labClass}
+            role="button"
+            tabIndex={0}
+            aria-label="Laboratório de Química, abaixo das salas 4, 5 e 6"
+            onClick={() => activate('laboratorio')}
+            onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') activate('laboratorio') }}
+          >
+            <title>Laboratório de Química — Bloco 1, abaixo das salas 04, 05 e 06</title>
+            <rect x="380" y="242" width="260" height="28" rx="9" />
+            <text x="510" y="261" textAnchor="middle" className="map-lab-label">LABORATÓRIO DE QUÍMICA</text>
+            {labVisited && <text x="625" y="258" textAnchor="middle" className="map-room-check">✓</text>}
+          </g>
         </g>
 
         <g className="map-walkway">
@@ -219,7 +241,7 @@ function BlocksMap({ destinationId, onZoneSelect }: Omit<SchoolMapProps, 'view'>
       </svg>
       <div className="map-caption">
         <strong>Blocos e salas</strong>
-        <span>Toque em um bloco ou em uma sala destacada para ver as exposições. As salas 09, 10 e 17 servem apenas como referência de localização.</span>
+        <span>Toque em um bloco, sala ou no Laboratório de Química para ver as exposições. O laboratório fica no Bloco 1, abaixo das salas 04, 05 e 06. As salas 09, 10 e 17 servem apenas como referência.</span>
       </div>
       <div className="map-legend" aria-label="Legenda do mapa">
         <span><i className="legend-swatch legend-swatch--project" /> Exposição da feira</span>
