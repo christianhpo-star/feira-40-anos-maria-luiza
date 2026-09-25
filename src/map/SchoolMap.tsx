@@ -11,7 +11,7 @@ interface SchoolMapProps {
 }
 
 const roomBlocks: Record<string, string> = {
-  'sala-01': 'bloco-01', 'sala-02': 'bloco-01', 'sala-03': 'bloco-01', 'sala-04': 'bloco-01', 'sala-05': 'bloco-01', 'sala-06': 'bloco-01', 'laboratorio-ciencias': 'bloco-01', 'sala-professores': 'bloco-01',
+  'sala-01': 'bloco-01', 'sala-02': 'bloco-01', 'sala-03': 'bloco-01', 'sala-04': 'bloco-01', 'sala-05': 'bloco-01', 'sala-06': 'bloco-01', 'laboratorio-ciencias': 'bloco-01', 'sala-professores': 'bloco-01', 'vice-direcao': 'bloco-01', 'secretaria-escolar': 'bloco-01',
   'sala-07': 'bloco-02', 'sala-08': 'bloco-02', 'sala-09': 'bloco-02', 'sala-10': 'bloco-02', 'sala-11': 'bloco-02', 'sala-12': 'bloco-02', 'sala-16': 'bloco-02',
   'sala-14': 'bloco-03', 'sala-15': 'bloco-03', 'sala-13': 'bloco-03', 'sala-17': 'bloco-03'
 }
@@ -82,7 +82,7 @@ function CampusMap({ destinationId, onZoneSelect }: Omit<SchoolMapProps, 'view'>
     <div className="map-shell" aria-label="Mapa geral esquemático da escola">
       <svg className="school-map campus-map" viewBox="0 0 760 560" role="img" aria-labelledby="campusTitle campusDesc" preserveAspectRatio="xMidYMid meet">
         <title id="campusTitle">Mapa geral dos espaços da escola</title>
-        <desc id="campusDesc">Mostra entrada principal, portão da secretaria, salas no segundo andar, Laboratório de Química e Sala dos Professores no primeiro andar do Bloco 1, pátio, cantina e refeitório no primeiro andar, quadra, quadra de areia e ligação por escada.</desc>
+        <desc id="campusDesc">Mostra entrada principal, portão da secretaria, salas no segundo andar e, no primeiro andar do Bloco 1, a sequência Laboratório de Química, Sala dos Professores, Vice-direção e Secretaria; além de pátio, cantina e refeitório, quadra, quadra de areia e ligação por escada.</desc>
 
         <rect x="20" y="20" width="720" height="520" rx="20" className="map-boundary" />
 
@@ -98,16 +98,10 @@ function CampusMap({ destinationId, onZoneSelect }: Omit<SchoolMapProps, 'view'>
 
         <g className="map-building">
           <rect x="55" y="105" width="155" height="290" rx="12" />
-          <text x="132" y="150" textAnchor="middle" className="map-floor-label">2º ANDAR</text>
-          <text x="132" y="180" textAnchor="middle" className="map-title">SALAS 01–06</text>
-          <line x1="70" y1="235" x2="195" y2="235" className="map-floor-divider" />
-          <text x="132" y="260" textAnchor="middle" className="map-floor-label">1º ANDAR</text>
-
-          <g className="map-reference-space">
-            <rect x="68" y="278" width="61" height="76" rx="10" />
-            <text x="98.5" y="309" textAnchor="middle" className="map-tiny">SALA DOS</text>
-            <text x="98.5" y="329" textAnchor="middle" className="map-tiny">PROFESSORES</text>
-          </g>
+          <text x="132" y="138" textAnchor="middle" className="map-floor-label">2º ANDAR</text>
+          <text x="132" y="164" textAnchor="middle" className="map-title">SALAS 01–06</text>
+          <line x1="70" y1="190" x2="195" y2="190" className="map-floor-divider" />
+          <text x="132" y="210" textAnchor="middle" className="map-floor-label">1º ANDAR</text>
 
           <g
             className={spaceClass('laboratorio-ciencias', 'map-lab-campus')}
@@ -116,9 +110,23 @@ function CampusMap({ destinationId, onZoneSelect }: Omit<SchoolMapProps, 'view'>
             onClick={() => onZoneSelect?.('laboratorio')}
             onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') onZoneSelect?.('laboratorio') }}
           >
-            <rect x="136" y="278" width="61" height="76" rx="10" />
-            <text x="166.5" y="309" textAnchor="middle" className="map-tiny">LAB.</text>
-            <text x="166.5" y="329" textAnchor="middle" className="map-tiny">QUÍMICA</text>
+            <rect x="75" y="220" width="115" height="35" rx="7" />
+            <text x="132" y="242" textAnchor="middle" className="map-tiny">LAB. QUÍMICA</text>
+          </g>
+
+          <g className="map-reference-space">
+            <rect x="75" y="258" width="115" height="35" rx="7" />
+            <text x="132" y="280" textAnchor="middle" className="map-tiny">SALA PROF.</text>
+          </g>
+
+          <g className="map-reference-space">
+            <rect x="75" y="296" width="115" height="35" rx="7" />
+            <text x="132" y="318" textAnchor="middle" className="map-tiny">VICE-DIREÇÃO</text>
+          </g>
+
+          <g className="map-reference-space">
+            <rect x="75" y="334" width="115" height="35" rx="7" />
+            <text x="132" y="356" textAnchor="middle" className="map-tiny">SECRETARIA</text>
           </g>
         </g>
 
@@ -162,7 +170,7 @@ function CampusMap({ destinationId, onZoneSelect }: Omit<SchoolMapProps, 'view'>
       </svg>
       <div className="map-caption">
         <strong>Visão geral da escola</strong>
-        <span>2º andar: salas · 1º andar: Cantina/Refeitório e, no Bloco 1, Sala dos Professores + Laboratório de Química.</span>
+        <span>2º andar: salas · 1º andar: Cantina/Refeitório e, no Bloco 1, Lab. de Química → Sala dos Professores → Vice-direção → Secretaria.</span>
       </div>
     </div>
   )
@@ -191,10 +199,10 @@ function BlocksMap({ destinationId, onZoneSelect }: Omit<SchoolMapProps, 'view'>
 
   return (
     <div className="map-shell" aria-label="Mapa de blocos e salas">
-      <svg className="school-map rooms-map" viewBox="0 0 760 900" role="img" aria-labelledby="roomsTitle roomsDesc" preserveAspectRatio="xMidYMid meet">
+      <svg className="school-map rooms-map" viewBox="0 0 760 1070" role="img" aria-labelledby="roomsTitle roomsDesc" preserveAspectRatio="xMidYMid meet">
         <title id="roomsTitle">Mapa dos blocos e salas</title>
-        <desc id="roomsDesc">No Bloco 1, as salas 1 a 6 ficam no segundo andar. No primeiro andar ficam a Sala dos Professores e, ao lado, o Laboratório de Química. Depois da passarela fica o Bloco 2 com salas 7, 8, 9, 10, 11, 12 e 16; e o Bloco 3 com salas 13, 14, 15 e 17. O portão da Secretaria fica à esquerda e a entrada de famílias à direita.</desc>
-        <rect x="20" y="20" width="720" height="860" rx="16" className="map-boundary" />
+        <desc id="roomsDesc">No Bloco 1, as salas 1 a 6 ficam no segundo andar. No primeiro andar, em sequência vertical, ficam Laboratório de Química, Sala dos Professores, Vice-direção e Secretaria. Depois da passarela fica o Bloco 2 com salas 7, 8, 9, 10, 11, 12 e 16; e o Bloco 3 com salas 13, 14, 15 e 17. O portão da Secretaria fica à esquerda e a entrada de famílias à direita.</desc>
+        <rect x="20" y="20" width="720" height="1030" rx="16" className="map-boundary" />
 
         <g className="map-gate map-gate--secretaria">
           <line x1="20" y1="58" x2="20" y2="112" />
@@ -208,7 +216,7 @@ function BlocksMap({ destinationId, onZoneSelect }: Omit<SchoolMapProps, 'view'>
 
         <g className={blockClass('bloco-01')} role="button" tabIndex={0} aria-label={`Bloco 1, ${blockProjects('bloco-01').length} exposições`}
           onClick={() => activate('bloco-01')} onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') activate('bloco-01') }}>
-          <rect x="70" y="90" width="620" height="260" rx="20" />
+          <rect x="70" y="90" width="620" height="430" rx="20" />
           <text x="380" y="125" textAnchor="middle" className="map-block-title">Bloco 1</text>
 
           <text x="95" y="158" className="map-floor-band-label">2º ANDAR · SALAS</text>
@@ -220,19 +228,13 @@ function BlocksMap({ destinationId, onZoneSelect }: Omit<SchoolMapProps, 'view'>
           <Room id="sala-06" x={570} y={170} {...roomProps} />
 
           <line x1="95" y1="238" x2="665" y2="238" className="map-floor-divider" />
-          <text x="95" y="263" className="map-floor-band-label">1º ANDAR</text>
-
-          <g className="map-reference-space" aria-label="Sala dos Professores, 1º andar do Bloco 1">
-            <rect x="310" y="276" width="155" height="52" rx="10" />
-            <text x="387.5" y="299" textAnchor="middle" className="map-reference-label">SALA DOS</text>
-            <text x="387.5" y="317" textAnchor="middle" className="map-reference-label">PROFESSORES</text>
-          </g>
+          <text x="95" y="263" className="map-floor-band-label">1º ANDAR · ORDEM DO CORREDOR</text>
 
           <g
             className={labClass}
             role="button"
             tabIndex={0}
-            aria-label="Laboratório de Química, 1º andar do Bloco 1, ao lado da Sala dos Professores"
+            aria-label="Laboratório de Química, primeiro espaço da sequência do 1º andar do Bloco 1"
             onClick={(event) => { event.stopPropagation(); activate('laboratorio') }}
             onKeyDown={(event) => {
               if (event.key === 'Enter' || event.key === ' ') {
@@ -241,44 +243,59 @@ function BlocksMap({ destinationId, onZoneSelect }: Omit<SchoolMapProps, 'view'>
               }
             }}
           >
-            <title>Laboratório de Química — 1º andar do Bloco 1, ao lado da Sala dos Professores</title>
-            <rect x="475" y="276" width="170" height="52" rx="10" />
-            <text x="560" y="307" textAnchor="middle" className="map-lab-label">LABORATÓRIO DE QUÍMICA</text>
-            {labVisited && <text x="630" y="292" textAnchor="middle" className="map-room-check">✓</text>}
+            <title>Laboratório de Química — 1º andar do Bloco 1</title>
+            <rect x="285" y="276" width="190" height="52" rx="10" />
+            <text x="380" y="307" textAnchor="middle" className="map-lab-label">LABORATÓRIO DE QUÍMICA</text>
+            {labVisited && <text x="460" y="292" textAnchor="middle" className="map-room-check">✓</text>}
+          </g>
+
+          <g className="map-reference-space" aria-label="Sala dos Professores, 1º andar do Bloco 1">
+            <rect x="285" y="334" width="190" height="52" rx="10" />
+            <text x="380" y="365" textAnchor="middle" className="map-reference-label">SALA DOS PROFESSORES</text>
+          </g>
+
+          <g className="map-reference-space" aria-label="Vice-direção, 1º andar do Bloco 1">
+            <rect x="285" y="392" width="190" height="52" rx="10" />
+            <text x="380" y="423" textAnchor="middle" className="map-reference-label">VICE-DIREÇÃO</text>
+          </g>
+
+          <g className="map-reference-space" aria-label="Secretaria, 1º andar do Bloco 1">
+            <rect x="285" y="450" width="190" height="52" rx="10" />
+            <text x="380" y="481" textAnchor="middle" className="map-reference-label">SECRETARIA</text>
           </g>
         </g>
 
         <g className="map-walkway">
-          <rect x="330" y="350" width="100" height="65" rx="12" />
-          <text x="380" y="389" textAnchor="middle" className="map-small">Passarela</text>
+          <rect x="330" y="520" width="100" height="65" rx="12" />
+          <text x="380" y="559" textAnchor="middle" className="map-small">Passarela</text>
         </g>
 
         <g className={blockClass('bloco-02')} role="button" tabIndex={0} aria-label={`Bloco 2, ${blockProjects('bloco-02').length} exposições`}
           onClick={() => activate('bloco-02')} onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') activate('bloco-02') }}>
-          <rect x="50" y="425" width="660" height="210" rx="20" />
-          <text x="380" y="470" textAnchor="middle" className="map-block-title">Bloco 2</text>
-          <Room id="sala-07" x={65} y={550} {...roomProps} />
-          <Room id="sala-08" x={155} y={550} {...roomProps} />
-          <Room id="sala-09" x={245} y={550} {...roomProps} />
-          <Room id="sala-10" x={335} y={550} {...roomProps} />
-          <Room id="sala-11" x={425} y={550} {...roomProps} />
-          <Room id="sala-12" x={515} y={550} {...roomProps} />
-          <Room id="sala-16" x={605} y={550} {...roomProps} />
+          <rect x="50" y="595" width="660" height="210" rx="20" />
+          <text x="380" y="640" textAnchor="middle" className="map-block-title">Bloco 2</text>
+          <Room id="sala-07" x={65} y={720} {...roomProps} />
+          <Room id="sala-08" x={155} y={720} {...roomProps} />
+          <Room id="sala-09" x={245} y={720} {...roomProps} />
+          <Room id="sala-10" x={335} y={720} {...roomProps} />
+          <Room id="sala-11" x={425} y={720} {...roomProps} />
+          <Room id="sala-12" x={515} y={720} {...roomProps} />
+          <Room id="sala-16" x={605} y={720} {...roomProps} />
         </g>
 
         <g className={blockClass('bloco-03')} role="button" tabIndex={0} aria-label={`Bloco 3, ${blockProjects('bloco-03').length} exposições`}
           onClick={() => activate('bloco-03')} onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') activate('bloco-03') }}>
-          <rect x="120" y="670" width="450" height="155" rx="20" />
-          <text x="345" y="712" textAnchor="middle" className="map-block-title">Bloco 3</text>
-          <Room id="sala-14" x={145} y={745} {...roomProps} />
-          <Room id="sala-15" x={255} y={745} {...roomProps} />
-          <Room id="sala-13" x={365} y={745} {...roomProps} />
-          <Room id="sala-17" x={475} y={745} {...roomProps} />
+          <rect x="120" y="840" width="450" height="155" rx="20" />
+          <text x="345" y="882" textAnchor="middle" className="map-block-title">Bloco 3</text>
+          <Room id="sala-14" x={145} y={915} {...roomProps} />
+          <Room id="sala-15" x={255} y={915} {...roomProps} />
+          <Room id="sala-13" x={365} y={915} {...roomProps} />
+          <Room id="sala-17" x={475} y={915} {...roomProps} />
         </g>
       </svg>
       <div className="map-caption">
         <strong>Blocos e salas</strong>
-        <span>No Bloco 1, as salas 01–06 ficam no 2º andar. No 1º andar ficam a Sala dos Professores e, ao lado, o Laboratório de Química. As salas 09, 10 e 17 servem apenas como referência.</span>
+        <span>No Bloco 1, as salas 01–06 ficam no 2º andar. No 1º andar, a sequência é: Laboratório de Química → Sala dos Professores → Vice-direção → Secretaria. As salas 09, 10 e 17 servem apenas como referência.</span>
       </div>
       <div className="map-legend" aria-label="Legenda do mapa">
         <span><i className="legend-swatch legend-swatch--project" /> Exposição da feira</span>
