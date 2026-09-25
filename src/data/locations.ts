@@ -29,7 +29,7 @@ export const locations: Location[] = [
     id: 'bloco-01-oeste',
     label: 'Bloco 1',
     shortLabel: 'Bloco 1',
-    description: 'No 2º andar ficam as salas 01 a 06. No 1º andar ficam o Laboratório de Química e a Sala dos Professores.',
+    description: 'No 2º andar ficam as salas 01 a 06. No 1º andar, em sequência, ficam Laboratório de Química, Sala dos Professores, Vice-direção e Secretaria.',
     zone: 'west'
   },
   {
@@ -104,7 +104,23 @@ export const locations: Location[] = [
     id: 'sala-professores',
     label: 'Sala dos Professores',
     shortLabel: 'Professores',
-    description: 'Sala dos Professores localizada no 1º andar do Bloco 1, ao lado do Laboratório de Química.',
+    description: 'Sala dos Professores localizada no 1º andar do Bloco 1, entre o Laboratório de Química e a Vice-direção.',
+    zone: 'west',
+    floor: '1º andar'
+  },
+  {
+    id: 'vice-direcao',
+    label: 'Vice-direção',
+    shortLabel: 'Vice-direção',
+    description: 'Vice-direção localizada no 1º andar do Bloco 1, entre a Sala dos Professores e a Secretaria.',
+    zone: 'west',
+    floor: '1º andar'
+  },
+  {
+    id: 'secretaria-escolar',
+    label: 'Secretaria',
+    shortLabel: 'Secretaria',
+    description: 'Secretaria localizada no 1º andar do Bloco 1, abaixo da Vice-direção na sequência do corredor.',
     zone: 'west',
     floor: '1º andar'
   },
