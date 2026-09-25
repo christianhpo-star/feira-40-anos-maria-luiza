@@ -27,4 +27,4 @@ URL de produção: https://mlml2.netlify.app/
 
 ## Observação
 
-A Química Forense mantém a Sala 13 como QR principal já testado. O Laboratório de Química fica no 1º andar do Bloco 1, ao lado da Sala dos Professores, e também é uma localização associada ao projeto.
+A Química Forense mantém a Sala 13 como QR principal já testado. No 1º andar do Bloco 1, a sequência física informada é: Laboratório de Química → Sala dos Professores → Vice-direção → Secretaria. O laboratório também é uma localização associada ao projeto de Química Forense.
