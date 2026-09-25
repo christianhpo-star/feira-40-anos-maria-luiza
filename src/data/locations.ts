@@ -94,10 +94,10 @@ export const locations: Location[] = [
   },
   {
     id: 'laboratorio-ciencias',
-    label: 'Laboratório de Ciências',
-    shortLabel: 'Laboratório',
-    description: 'Laboratório de Ciências da escola.',
-    zone: 'unknown'
+    label: 'Laboratório de Química',
+    shortLabel: 'Lab. Química',
+    description: 'Laboratório de Química localizado no Bloco 1, abaixo das salas 04, 05 e 06.',
+    zone: 'west'
   },
   ...['01', '02', '03', '04', '05', '06'].map((n) => room(`sala-${n}`, `Sala ${n}`, 'west')),
   ...['07', '08', '09', '10', '11', '12', '16'].map((n) => room(`sala-${n}`, `Sala ${n}`, 'central')),
