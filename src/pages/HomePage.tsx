@@ -22,7 +22,7 @@ export function HomePage() {
     <main id="conteudo" className="page home-page">
       <section className="hero">
         <div className="hero__brandrow">
-          <img src="/images/logo-escola.png" alt="40 anos da E.E. Maria Luiza Miranda Bastos" />
+          <img src="/images/logo-escola.png?v=20260925-4" alt="40 anos da E.E. Maria Luiza Miranda Bastos" />
           <div className="hero__identity">
             <span className="hero__passport-label">Passaporte digital</span>
             <span className="hero__period">{siteInfo.period}</span>
