@@ -205,7 +205,7 @@ function BlocksMap({ destinationId, onZoneSelect }: Omit<SchoolMapProps, 'view'>
     <div className="map-shell" aria-label="Mapa de blocos e salas">
       <svg className="school-map rooms-map" viewBox="0 0 760 1070" role="img" aria-labelledby="roomsTitle roomsDesc" preserveAspectRatio="xMidYMid meet">
         <title id="roomsTitle">Mapa dos blocos e salas</title>
-        <desc id="roomsDesc">No Bloco 1, as salas 1 a 6 ficam no segundo andar. No primeiro andar, em sequência vertical, ficam Laboratório de Química, Sala dos Professores, Vice-direção e Secretaria. Depois da passarela fica o Bloco 2 com salas 7, 8, 9, 10, 11, 12 e 16; e o Bloco 3 com salas 13, 14, 15 e 17. O portão da Secretaria fica à esquerda e a entrada de famílias à direita.</desc>
+        <desc id="roomsDesc">No Bloco 1, o primeiro e o segundo andar ocupam a mesma planta retangular. No segundo andar ficam as salas 1 a 6. No primeiro andar, na mesma orientação, ficam Laboratório de Química, Sala dos Professores, Vice-direção e Secretaria. Depois da passarela fica o Bloco 2 com salas 7, 8, 9, 10, 11, 12 e 16; e o Bloco 3 com salas 13, 14, 15 e 17. O portão da Secretaria fica à esquerda e a entrada de famílias à direita.</desc>
         <rect x="20" y="20" width="720" height="1030" rx="16" className="map-boundary" />
 
         <g className="map-gate map-gate--secretaria">
@@ -225,19 +225,17 @@ function BlocksMap({ destinationId, onZoneSelect }: Omit<SchoolMapProps, 'view'>
 
           <text x="95" y="155" className="map-floor-band-label">2º ANDAR · MESMA PLANTA DO 1º ANDAR</text>
           <g className="map-floor-plan" aria-label="Planta retangular do 2º andar do Bloco 1">
-            <rect x="95" y="168" width="570" height="82" rx="10" className="map-floor-shell" />
-            <Room id="sala-01" x={95} y={168} width={95} height={82} rx={10} floorSegment {...roomProps} />
+            <Room id="sala-01" x={95} y={168} width={95} height={82} rx={0} floorSegment {...roomProps} />
             <Room id="sala-02" x={190} y={168} width={95} height={82} rx={0} floorSegment {...roomProps} />
             <Room id="sala-03" x={285} y={168} width={95} height={82} rx={0} floorSegment {...roomProps} />
             <Room id="sala-04" x={380} y={168} width={95} height={82} rx={0} floorSegment {...roomProps} />
             <Room id="sala-05" x={475} y={168} width={95} height={82} rx={0} floorSegment {...roomProps} />
-            <Room id="sala-06" x={570} y={168} width={95} height={82} rx={10} floorSegment {...roomProps} />
+            <Room id="sala-06" x={570} y={168} width={95} height={82} rx={0} floorSegment {...roomProps} />
+            <rect x="95" y="168" width="570" height="82" rx="10" className="map-floor-shell map-floor-shell--outline" />
           </g>
 
           <text x="95" y="292" className="map-floor-band-label">1º ANDAR · MESMO PRÉDIO / MESMA ORIENTAÇÃO</text>
           <g className="map-floor-plan" aria-label="Planta retangular do 1º andar do Bloco 1">
-            <rect x="95" y="305" width="570" height="82" rx="10" className="map-floor-shell" />
-
             <g
               className={`${labClass} map-floor-space`}
               role="button"
@@ -252,7 +250,7 @@ function BlocksMap({ destinationId, onZoneSelect }: Omit<SchoolMapProps, 'view'>
               }}
             >
               <title>Laboratório de Química — 1º andar do Bloco 1</title>
-              <rect x="95" y="305" width="142.5" height="82" rx="10" />
+              <rect x="95" y="305" width="142.5" height="82" rx="0" />
               <text x="166.25" y="338" textAnchor="middle" className="map-lab-label">LABORATÓRIO</text>
               <text x="166.25" y="358" textAnchor="middle" className="map-lab-label">DE QUÍMICA</text>
               {labVisited && <text x="222" y="322" textAnchor="middle" className="map-room-check">✓</text>}
@@ -270,9 +268,10 @@ function BlocksMap({ destinationId, onZoneSelect }: Omit<SchoolMapProps, 'view'>
             </g>
 
             <g className="map-reference-space map-floor-space" aria-label="Secretaria, 1º andar do Bloco 1">
-              <rect x="522.5" y="305" width="142.5" height="82" rx="10" />
+              <rect x="522.5" y="305" width="142.5" height="82" rx="0" />
               <text x="593.75" y="351" textAnchor="middle" className="map-reference-label">SECRETARIA</text>
             </g>
+            <rect x="95" y="305" width="570" height="82" rx="10" className="map-floor-shell map-floor-shell--outline" />
           </g>
 
           <g className="map-floor-alignment" aria-hidden="true">
