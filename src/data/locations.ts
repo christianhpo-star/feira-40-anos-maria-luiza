@@ -36,14 +36,14 @@ export const locations: Location[] = [
     id: 'bloco-02-central',
     label: 'Bloco 2',
     shortLabel: 'Bloco 2',
-    description: 'Bloco com as salas 07, 08, 09, 10, 11, 12 e 16.',
+    description: 'No 2º andar ficam as salas 07, 08, 09, 10, 11, 12 e 16. No 1º andar ficam Cantina, Refeitório, escada, Xerox e Sala de Reunião.',
     zone: 'central'
   },
   {
     id: 'bloco-03-direita',
     label: 'Bloco 3',
     shortLabel: 'Bloco 3',
-    description: 'Bloco com as salas 13, 14, 15 e 17.',
+    description: 'No 2º andar ficam as salas 14, 15, 13 e 17. No 1º andar fica a Biblioteca e a escada do Bloco 3.',
     zone: 'right'
   },
   {
@@ -86,10 +86,58 @@ export const locations: Location[] = [
   },
   {
     id: 'refeitorio-cantina',
-    label: 'Refeitório / Cantina',
+    label: 'Refeitório',
     shortLabel: 'Refeitório',
-    description: 'Espaço do refeitório e da cantina.',
+    description: 'Refeitório localizado no 1º andar do Bloco 2, abaixo da Cantina.',
     zone: 'central',
+    floor: '1º andar'
+  },
+  {
+    id: 'cantina',
+    label: 'Cantina',
+    shortLabel: 'Cantina',
+    description: 'Cantina localizada no 1º andar do Bloco 2, acima do Refeitório.',
+    zone: 'central',
+    floor: '1º andar'
+  },
+  {
+    id: 'xerox',
+    label: 'Xerox',
+    shortLabel: 'Xerox',
+    description: 'Espaço de Xerox localizado na parte inferior do 1º andar do Bloco 2.',
+    zone: 'central',
+    floor: '1º andar'
+  },
+  {
+    id: 'sala-reuniao',
+    label: 'Sala de Reunião',
+    shortLabel: 'Reunião',
+    description: 'Sala de Reunião localizada na parte inferior do 1º andar do Bloco 2.',
+    zone: 'central',
+    floor: '1º andar'
+  },
+  {
+    id: 'biblioteca',
+    label: 'Biblioteca',
+    shortLabel: 'Biblioteca',
+    description: 'Biblioteca localizada na parte superior do 1º andar do Bloco 3.',
+    zone: 'right',
+    floor: '1º andar'
+  },
+  {
+    id: 'escada-bloco-02',
+    label: 'Escada do Bloco 2',
+    shortLabel: 'Escada B2',
+    description: 'Escada indicada junto ao Refeitório no 1º andar do Bloco 2.',
+    zone: 'connector',
+    floor: '1º andar'
+  },
+  {
+    id: 'escada-bloco-03',
+    label: 'Escada do Bloco 3',
+    shortLabel: 'Escada B3',
+    description: 'Escada de acesso do Bloco 3 indicada no 1º andar.',
+    zone: 'connector',
     floor: '1º andar'
   },
   {
