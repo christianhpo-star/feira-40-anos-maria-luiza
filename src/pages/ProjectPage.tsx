@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useLocation, useParams } from 'react-router-dom'
 import { PageHeader } from '../components/PageHeader'
 import { useProgress } from '../context/ProgressContext'
@@ -11,6 +11,7 @@ export function ProjectPage() {
   const project = projectId ? projectById[projectId] : undefined
   const location = useLocation()
   const { visited, activeRoute, toggleVisited, setCurrentLocation } = useProgress()
+  const [visitFeedback, setVisitFeedback] = useState('')
 
   const qrLocation = new URLSearchParams(location.search).get('local')
   useEffect(() => {
@@ -26,6 +27,12 @@ export function ProjectPage() {
   const nextId = projectIsInRoute && route ? route.projectIds[currentIndex + 1] : null
   const nextProject = nextId ? projectById[nextId] : null
   const backTo = projectIsInRoute && route ? `/rotas/${route.id}` : '/projetos'
+
+  const handleVisited = () => {
+    const willMarkVisited = !isVisited
+    toggleVisited(project.id)
+    setVisitFeedback(willMarkVisited ? '✓ Projeto adicionado ao seu passaporte.' : 'Projeto removido do seu passaporte.')
+  }
 
   return (
     <main id="conteudo" className="page project-detail">
@@ -53,9 +60,14 @@ export function ProjectPage() {
 
       <div className="action-stack">
         <Link className="button button--secondary button--large" to={`/mapa?destino=${project.locationIds[0]}`}>⌖ Como chegar</Link>
-        <button className={`button button--large ${isVisited ? 'button--done' : 'button--primary'}`} onClick={() => toggleVisited(project.id)}>
+        <button
+          className={`button button--large ${isVisited ? 'button--done' : 'button--primary'}`}
+          onClick={handleVisited}
+          aria-pressed={isVisited}
+        >
           {isVisited ? '✓ Projeto visitado' : 'Marcar como visitado'}
         </button>
+        {visitFeedback && <div className="visit-feedback" role="status" aria-live="polite">{visitFeedback}</div>}
       </div>
 
       <details className="details-card">

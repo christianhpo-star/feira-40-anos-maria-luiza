@@ -4,10 +4,9 @@ export const routes: RouteDefinition[] = [
   {
     id: '40-minutos',
     title: 'Rota 40 minutos',
-    subtitle: 'Uma seleção da feira em 7 paradas',
+    subtitle: '7 paradas para celebrar os 40 anos',
     description: 'Uma seleção de experiências que atravessa história, ciência, tecnologia, memória e esporte em diferentes espaços da escola.',
     icon: '⏱',
-    estimatedTime: 'cerca de 40 min',
     projectIds: ['muro-berlim', 'cesio-137', 'evolucao-computador', 'revolucao-imunologica', 'inovamente', 'historia-escola', '40-anos-movimento']
   },
   {

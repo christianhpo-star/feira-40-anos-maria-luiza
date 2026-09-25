@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { PageHeader } from '../components/PageHeader'
 import { ProjectCard } from '../components/ProjectCard'
 import { useProgress } from '../context/ProgressContext'
@@ -42,7 +43,20 @@ export function ProjectsPage() {
       </div>
       <p className="results-count" aria-live="polite">{filtered.length} {filtered.length === 1 ? 'projeto encontrado' : 'projetos encontrados'}</p>
       <section className="project-list">
-        {filtered.map((project) => <ProjectCard key={project.id} project={project} visited={visited.includes(project.id)} />)}
+        {filtered.length > 0 ? filtered.map((project) => (
+          <div className="project-result" key={project.id}>
+            <ProjectCard project={project} visited={visited.includes(project.id)} />
+            <Link className="project-map-link" to={`/mapa?destino=${project.locationIds[0]}`} aria-label={`Ver ${project.roomLabel} no mapa`}>
+              <span aria-hidden="true">⌖</span> Ver no mapa
+            </Link>
+          </div>
+        )) : (
+          <div className="empty-state" role="status">
+            <strong>Nenhum projeto encontrado.</strong>
+            <span>Tente outro termo ou volte para a lista completa.</span>
+            <button type="button" className="text-button" onClick={() => { setQuery(''); setFilter('todos') }}>Limpar busca</button>
+          </div>
+        )}
       </section>
     </main>
   )

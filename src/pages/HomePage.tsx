@@ -1,13 +1,22 @@
-import { Link } from 'react-router-dom'
+import { useEffect } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { ProgressBar } from '../components/ProgressBar'
 import { useProgress } from '../context/ProgressContext'
 import { projects } from '../data/projects'
 import { routeById } from '../data/routes'
 import { siteInfo } from '../data/site'
+import { locationById } from '../data/locations'
 
 export function HomePage() {
-  const { visited, activeRoute } = useProgress()
+  const { visited, activeRoute, setCurrentLocation } = useProgress()
+  const location = useLocation()
   const active = activeRoute ? routeById[activeRoute] : null
+  const qrLocation = new URLSearchParams(location.search).get('local')
+  const qrLocationData = qrLocation ? locationById[qrLocation] : null
+
+  useEffect(() => {
+    if (qrLocationData) setCurrentLocation(qrLocationData.id)
+  }, [qrLocationData, setCurrentLocation])
 
   return (
     <main id="conteudo" className="page home-page">
@@ -22,6 +31,7 @@ export function HomePage() {
           <span>•</span>
           <span>{siteInfo.time}</span>
         </div>
+        {qrLocationData && <div className="location-confirm" role="status">⌖ Você está em <strong>{qrLocationData.label}</strong></div>}
         <p className="kicker">{siteInfo.eventName}</p>
         <h1>Uma viagem por<br /><span>40 anos de histórias.</span></h1>
         <p className="hero__lead">Descubra os projetos, encontre as salas e acompanhe seu percurso pela escola.</p>

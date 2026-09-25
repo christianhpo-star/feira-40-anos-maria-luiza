@@ -192,7 +192,7 @@ export const projects: Project[] = [
     roomLabel: 'Quadra de areia',
     locationIds: ['quadra-areia'],
     shortSummary: 'A evolução do esporte nos últimos 40 anos e sua relação com saúde, bem-estar e inclusão.',
-    encounter: 'Marcos isportivos, medicina desportiva, saúde física e mental e inclusão social.',
+    encounter: 'Marcos esportivos, medicina desportiva, saúde física e mental e inclusão social.',
     description: 'O projeto analisa a evolução do esporte nos últimos 40 anos, destacando marcos históricos, mudanças nas competições e reflexos na saúde física e mental. Mostra como a prática esportiva se consolidou como ferramenta de bem-estar e inclusão social.',
     themes: ['esporte-sociedade', 'historia-memoria'],
     timeAnchor: '1986 → 2026'
