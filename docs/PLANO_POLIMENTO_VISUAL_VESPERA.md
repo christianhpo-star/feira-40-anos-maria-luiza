@@ -173,10 +173,10 @@ A partir da aprovação visual final:
 ## Status
 
 - [x] Plano documentado
-- [ ] Etapa 1 — Fundação visual e Home
-- [ ] Etapa 2 — Projetos e rotas
-- [ ] Etapa 3 — Passaporte
-- [ ] Etapa 4 — Mapa
-- [ ] Etapa 5 — Timeline e acabamento
+- [x] Etapa 1 — Fundação visual e Home — implementada, aguardando QA
+- [x] Etapa 2 — Projetos e rotas — implementada, aguardando QA
+- [x] Etapa 3 — Passaporte — implementada, aguardando QA
+- [x] Etapa 4 — Mapa — implementada, aguardando QA
+- [x] Etapa 5 — Timeline e acabamento — implementada, aguardando QA
 - [ ] QA final
 - [ ] Merge em `main`
