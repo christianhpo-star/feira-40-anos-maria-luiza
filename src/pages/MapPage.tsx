@@ -20,14 +20,14 @@ export function MapPage() {
   const [params] = useSearchParams()
   const destination = params.get('destino')
   const destinationLocation = destination ? locationById[destination] : null
-  const initialView: SchoolMapView = destination?.startsWith('sala-') ? 'rooms' : 'campus'
+  const initialView: SchoolMapView = destination?.startsWith('sala-') || destination === 'laboratorio-ciencias' ? 'rooms' : 'campus'
   const { currentLocation, visited, setCurrentLocation } = useProgress()
   const currentLocationData = currentLocation ? locationById[currentLocation] : null
   const [view, setView] = useState<SchoolMapView>(initialView)
   const [zone, setZone] = useState<string | null>(null)
 
   useEffect(() => {
-    if (destination?.startsWith('sala-')) setView('rooms')
+    if (destination?.startsWith('sala-') || destination === 'laboratorio-ciencias') setView('rooms')
   }, [destination])
 
   const zoneProjects = useMemo(() => {
