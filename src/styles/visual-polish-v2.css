@@ -1701,7 +1701,7 @@ body {
 
 .project-detail .button--primary {
   background: linear-gradient(135deg, var(--project-deep), var(--project-accent));
-  box-shadow: 0 10px 24px color-mix(in srgb, var(--project-accent) 24%, transparent);
+  box-shadow: 0 10px 24px rgba(31, 36, 48, .16);
 }
 
 @media (hover: hover) {
