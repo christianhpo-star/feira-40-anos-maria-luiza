@@ -66,11 +66,13 @@ export function MapPage() {
           Visão geral
         </button>
         <button type="button" className={view === 'rooms' ? 'map-view-tab is-active' : 'map-view-tab'} onClick={() => setView('rooms')} role="tab" aria-selected={view === 'rooms'}>
-          Blocos e salas
+          Encontrar sala
         </button>
       </div>
 
-      <SchoolMap view={view} destinationId={destination} onZoneSelect={setZone} />
+      <div className={`map-view-panel map-view-panel--${view}`}>
+        <SchoolMap view={view} destinationId={destination} onZoneSelect={setZone} />
+      </div>
 
       {zone && (
         <section className="section-block map-projects-panel" aria-live="polite">
