@@ -27,4 +27,4 @@ URL de produção: https://mlml2.netlify.app/
 
 ## Observação
 
-A Química Forense usa a Sala 13 como ponto principal nesta versão. A localização física do Laboratório de Ciências ainda não foi confirmada.
+A Química Forense mantém a Sala 13 como QR principal já testado. O Laboratório de Química fica no Bloco 1, abaixo das salas 04, 05 e 06, e também é uma localização associada ao projeto.
