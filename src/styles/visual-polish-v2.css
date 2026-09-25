@@ -1,0 +1,523 @@
+/* Polimento visual de véspera — camada reversível
+   Importada por último para preservar a lógica e permitir rollback simples. */
+
+:root {
+  --paper: #fffdfb;
+  --cream: #fbf7f1;
+  --magenta-soft: #fbf0f7;
+  --blue-soft: #eef4fb;
+  --green-soft: #eef8f1;
+  --gold: #b97816;
+  --gold-soft: #fff7e6;
+  --shadow-card: 0 12px 32px rgba(31, 36, 48, .075);
+  --shadow-float: 0 18px 44px rgba(72, 31, 66, .12);
+}
+
+body {
+  background:
+    radial-gradient(circle at 8% 2%, rgba(144, 29, 115, .065), transparent 24rem),
+    radial-gradient(circle at 94% 12%, rgba(21, 133, 56, .055), transparent 22rem),
+    linear-gradient(180deg, #fffefd 0%, #faf8fb 48%, #f7f5f8 100%);
+}
+
+.app-shell {
+  position: relative;
+  isolation: isolate;
+}
+
+.app-shell::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: .32;
+  background-image: radial-gradient(circle, rgba(9, 49, 112, .13) 1px, transparent 1.2px);
+  background-size: 26px 26px;
+  mask-image: linear-gradient(to bottom, #000 0, transparent 34rem);
+}
+
+.page {
+  position: relative;
+}
+
+/* Cabeçalhos */
+.page-header {
+  margin-bottom: 2px;
+}
+
+.page-header__row {
+  min-height: 62px;
+}
+
+.page-header h1 {
+  color: #202738;
+  font-weight: 900;
+  letter-spacing: -.035em;
+}
+
+.page-header p {
+  max-width: 35rem;
+}
+
+/* Hero */
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: 24px;
+  border: 1px solid rgba(144, 29, 115, .14);
+  border-radius: 30px;
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.98), rgba(251,240,247,.94)),
+    var(--paper);
+  box-shadow: var(--shadow-float);
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 260px;
+  height: 260px;
+  top: -112px;
+  right: -98px;
+  border: 28px solid rgba(21, 133, 56, .075);
+  border-radius: 50%;
+  box-shadow: 0 0 0 20px rgba(144, 29, 115, .045);
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 190px;
+  height: 190px;
+  left: -88px;
+  bottom: -108px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(9,49,112,.10), rgba(9,49,112,0) 68%);
+}
+
+.hero__brandrow {
+  position: relative;
+  z-index: 1;
+  align-items: center;
+}
+
+.hero__brandrow img {
+  width: 118px;
+  height: 118px;
+  max-width: 40vw;
+  max-height: none;
+  padding: 8px;
+  border-radius: 24px;
+  background: rgba(255,255,255,.84);
+  box-shadow: 0 10px 24px rgba(40, 29, 49, .08);
+  object-fit: contain;
+}
+
+.hero__identity {
+  display: grid;
+  justify-items: end;
+  gap: 7px;
+  text-align: right;
+}
+
+.hero__passport-label {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 6px 10px;
+  border: 1px solid rgba(144, 29, 115, .18);
+  border-radius: 999px;
+  background: rgba(255,255,255,.8);
+  color: var(--magenta);
+  font-size: .7rem;
+  font-weight: 900;
+  letter-spacing: .10em;
+  text-transform: uppercase;
+}
+
+.hero__period {
+  color: var(--blue);
+  font-size: .82rem;
+  font-weight: 900;
+  letter-spacing: .11em;
+}
+
+.event-pill {
+  margin-top: 16px;
+  box-shadow: 0 6px 16px rgba(21, 133, 56, .07);
+}
+
+.hero .kicker {
+  margin: 24px 0 8px;
+}
+
+.hero h1 {
+  max-width: 11ch;
+  text-wrap: balance;
+  text-shadow: 0 1px 0 rgba(255,255,255,.9);
+}
+
+.hero__theme {
+  max-width: 35rem;
+  margin: 14px 0 0;
+  color: #3e4554;
+  font-size: .94rem;
+  font-weight: 750;
+  line-height: 1.45;
+}
+
+.era-track {
+  display: grid;
+  grid-template-columns: auto minmax(20px, 1fr) auto minmax(20px, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  margin: 20px 0 2px;
+  padding: 12px 14px;
+  border: 1px solid rgba(9, 49, 112, .10);
+  border-radius: 17px;
+  background: rgba(255,255,255,.74);
+}
+
+.era-track > span {
+  display: grid;
+  gap: 1px;
+}
+
+.era-track > span:nth-of-type(2) {
+  text-align: center;
+}
+
+.era-track > span:nth-of-type(3) {
+  text-align: right;
+}
+
+.era-track strong {
+  color: var(--blue);
+  font-size: .85rem;
+  font-weight: 950;
+}
+
+.era-track small {
+  color: var(--muted);
+  font-size: .65rem;
+}
+
+.era-track i {
+  height: 1px;
+  position: relative;
+  background: repeating-linear-gradient(90deg, rgba(144,29,115,.42) 0 5px, transparent 5px 9px);
+}
+
+.era-track i::after {
+  content: "";
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  top: 50%;
+  right: -1px;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  background: var(--magenta);
+}
+
+.hero__lead {
+  margin-top: 18px;
+  margin-bottom: 18px;
+}
+
+.hero__actions {
+  display: grid;
+  gap: 10px;
+}
+
+.hero__map-button {
+  background: rgba(255,255,255,.86);
+}
+
+/* Botões */
+.button {
+  border-radius: 15px;
+  font-weight: 850;
+  letter-spacing: -.01em;
+}
+
+.button--primary {
+  background: linear-gradient(135deg, var(--magenta), #a52b84);
+  box-shadow: 0 10px 22px rgba(144, 29, 115, .20);
+}
+
+.button--secondary {
+  background: rgba(255,255,255,.92);
+  box-shadow: 0 6px 18px rgba(31, 36, 48, .045);
+}
+
+/* Cards rápidos */
+.quick-grid {
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.quick-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 132px;
+  padding: 16px;
+  border: 1px solid rgba(31,36,48,.075);
+  background: rgba(255,255,255,.92);
+  box-shadow: 0 10px 24px rgba(31, 36, 48, .055);
+}
+
+.quick-card::after {
+  content: "";
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  right: -26px;
+  top: -28px;
+  border-radius: 50%;
+  opacity: .65;
+}
+
+.quick-card__icon {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  font-size: 1.15rem !important;
+  font-weight: 900;
+}
+
+.quick-card--map .quick-card__icon {
+  color: #176a34;
+  background: var(--green-soft);
+}
+.quick-card--map::after { background: var(--green-soft); }
+
+.quick-card--route .quick-card__icon {
+  color: var(--magenta);
+  background: var(--magenta-soft);
+}
+.quick-card--route::after { background: var(--magenta-soft); }
+
+.quick-card--projects .quick-card__icon {
+  color: var(--blue);
+  background: var(--blue-soft);
+}
+.quick-card--projects::after { background: var(--blue-soft); }
+
+.quick-card--time .quick-card__icon {
+  color: #865d13;
+  background: var(--gold-soft);
+}
+.quick-card--time::after { background: var(--gold-soft); }
+
+.quick-card strong {
+  position: relative;
+  z-index: 1;
+  font-size: .98rem;
+}
+
+.quick-card small {
+  position: relative;
+  z-index: 1;
+  font-size: .78rem;
+}
+
+/* Superfícies gerais */
+.project-card,
+.route-card,
+.content-card,
+.details-card,
+.timeline-intro,
+.map-projects-panel,
+.passport-row {
+  border-color: rgba(31,36,48,.075);
+  box-shadow: 0 8px 22px rgba(31, 36, 48, .045);
+}
+
+.project-card,
+.route-card {
+  background: rgba(255,255,255,.95);
+}
+
+.route-card__icon {
+  box-shadow: inset 0 0 0 1px rgba(144,29,115,.08);
+}
+
+.project-card .eyebrow,
+.route-card h3 {
+  font-weight: 900;
+}
+
+/* Narrativa */
+.story-card--celebration {
+  position: relative;
+  overflow: hidden;
+  border-color: rgba(9, 49, 112, .10);
+  background:
+    radial-gradient(circle at 100% 0, rgba(21,133,56,.08), transparent 42%),
+    linear-gradient(145deg, #fff, #f5f7fb);
+  box-shadow: var(--shadow-card);
+}
+
+.story-card--celebration::before {
+  content: "40";
+  position: absolute;
+  right: -8px;
+  bottom: -34px;
+  color: rgba(144,29,115,.055);
+  font-size: 8.5rem;
+  font-weight: 950;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.story-card--celebration h2,
+.story-card--celebration p,
+.story-card--celebration .eyebrow {
+  position: relative;
+  z-index: 1;
+}
+
+.story-card__marks {
+  display: grid;
+  grid-template-columns: auto 1fr auto 1fr auto;
+  gap: 8px;
+  align-items: center;
+  margin-top: 18px;
+  color: var(--blue);
+  font-size: .72rem;
+  font-weight: 900;
+}
+
+.story-card__marks i {
+  height: 2px;
+  background: linear-gradient(90deg, var(--magenta), var(--green));
+  opacity: .35;
+}
+
+/* Rota ativa */
+.active-route-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.08);
+  background:
+    radial-gradient(circle at 100% 0, rgba(21,133,56,.22), transparent 45%),
+    linear-gradient(135deg, #1e2945, #293957);
+  box-shadow: 0 12px 28px rgba(19, 30, 53, .16);
+}
+
+/* Navegação inferior */
+.bottom-nav {
+  border: 1px solid rgba(31,36,48,.07);
+  border-bottom: 0;
+  box-shadow: 0 -10px 28px rgba(31,36,48,.075);
+  background: rgba(255,255,255,.92);
+}
+
+.bottom-nav__item {
+  transition: background .15s ease, color .15s ease, transform .15s ease;
+}
+
+.bottom-nav__item.is-active {
+  background: linear-gradient(180deg, #fbf1f8, #f7eff5);
+  box-shadow: inset 0 0 0 1px rgba(144,29,115,.06);
+}
+
+/* Interações apenas quando há hover real */
+@media (hover: hover) {
+  .quick-card:hover,
+  .project-card:hover,
+  .route-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 30px rgba(31,36,48,.085);
+  }
+
+  .button:hover {
+    transform: translateY(-1px);
+  }
+}
+
+@media (min-width: 620px) {
+  .hero__actions {
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, .85fr);
+  }
+}
+
+@media (max-width: 430px) {
+  .hero {
+    padding: 18px;
+    border-radius: 24px;
+  }
+
+  .hero__brandrow img {
+    width: 94px;
+    height: 94px;
+    padding: 6px;
+    border-radius: 20px;
+  }
+
+  .hero__passport-label {
+    min-height: 27px;
+    padding: 5px 8px;
+    font-size: .61rem;
+  }
+
+  .hero__period {
+    font-size: .7rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.05rem, 10vw, 3rem);
+  }
+
+  .hero__theme {
+    font-size: .88rem;
+  }
+
+  .era-track {
+    gap: 6px;
+    padding: 10px;
+  }
+
+  .era-track strong {
+    font-size: .78rem;
+  }
+
+  .era-track small {
+    font-size: .6rem;
+  }
+
+  .quick-card {
+    min-height: 124px;
+  }
+}
+
+@media (max-width: 355px) {
+  .hero__identity {
+    gap: 5px;
+  }
+
+  .hero__passport-label {
+    letter-spacing: .05em;
+  }
+
+  .era-track small {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .quick-card,
+  .project-card,
+  .route-card,
+  .button,
+  .bottom-nav__item {
+    transition: none !important;
+  }
+}
