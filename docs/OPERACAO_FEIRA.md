@@ -47,6 +47,7 @@ A lista canônica de projetos está em `src/data/projects.ts`.
 
 - 1º andar: Cantina / Refeitório.
 - 2º andar: salas de exposição.
+- Laboratório de Química: Bloco 1, abaixo das salas 04, 05 e 06.
 - O acesso ao 2º andar é por escadas.
 - A escola não possui elevador ou rampa para esse pavimento.
 
