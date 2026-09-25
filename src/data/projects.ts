@@ -147,7 +147,7 @@ export const projects: Project[] = [
     className: '3º Química',
     blockId: 'bloco-03',
     blockLabel: 'Blocos 3 e 1',
-    roomLabel: 'Sala 13 / Laboratório de Química',
+    roomLabel: 'Sala 13 / Laboratório de Química · Bloco 1 · 1º andar',
     locationIds: ['sala-13', 'laboratorio-ciencias'],
     shortSummary: 'Quatro décadas de avanços da Química Forense aplicados à investigação de vestígios.',
     encounter: 'DNA, luminescência, identificação de substâncias e análises toxicológicas em casos reais.',
