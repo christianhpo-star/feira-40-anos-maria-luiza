@@ -49,7 +49,7 @@ export function MapPage() {
       )}
 
       <div className="floor-summary" aria-label="Resumo dos andares">
-        <span><strong>1º andar</strong>Cantina / Refeitório · Lab. de Química no Bloco 1</span>
+        <span><strong>1º andar</strong>Cantina / Refeitório · Bloco 1: Lab. Química, Sala dos Professores, Vice-direção e Secretaria</span>
         <span><strong>2º andar</strong>Salas de exposição</span>
       </div>
 
