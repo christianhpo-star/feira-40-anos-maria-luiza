@@ -29,7 +29,7 @@ export const locations: Location[] = [
     id: 'bloco-01-oeste',
     label: 'Bloco 1',
     shortLabel: 'Bloco 1',
-    description: 'Bloco com as salas 01, 02, 03, 04, 05 e 06.',
+    description: 'No 2º andar ficam as salas 01 a 06. No 1º andar ficam o Laboratório de Química e a Sala dos Professores.',
     zone: 'west'
   },
   {
@@ -96,8 +96,17 @@ export const locations: Location[] = [
     id: 'laboratorio-ciencias',
     label: 'Laboratório de Química',
     shortLabel: 'Lab. Química',
-    description: 'Laboratório de Química localizado no Bloco 1, abaixo das salas 04, 05 e 06.',
-    zone: 'west'
+    description: 'Laboratório de Química localizado no 1º andar do Bloco 1, ao lado da Sala dos Professores.',
+    zone: 'west',
+    floor: '1º andar'
+  },
+  {
+    id: 'sala-professores',
+    label: 'Sala dos Professores',
+    shortLabel: 'Professores',
+    description: 'Sala dos Professores localizada no 1º andar do Bloco 1, ao lado do Laboratório de Química.',
+    zone: 'west',
+    floor: '1º andar'
   },
   ...['01', '02', '03', '04', '05', '06'].map((n) => room(`sala-${n}`, `Sala ${n}`, 'west')),
   ...['07', '08', '09', '10', '11', '12', '16'].map((n) => room(`sala-${n}`, `Sala ${n}`, 'central')),
