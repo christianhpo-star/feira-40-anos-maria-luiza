@@ -1738,3 +1738,53 @@ body {
     max-width: 13ch;
   }
 }
+
+
+/* Plantas alinhadas do Bloco 1 */
+.map-floor-plan {
+  cursor: default;
+}
+
+.map-floor-shell--outline {
+  fill: none !important;
+  stroke: #315f9d !important;
+  stroke-width: 3 !important;
+  pointer-events: none;
+}
+
+.map-floor-room rect,
+.map-floor-space rect {
+  shape-rendering: geometricPrecision;
+}
+
+.map-floor-room rect {
+  stroke-width: 1.8;
+}
+
+.map-floor-room + .map-floor-room rect,
+.map-floor-space + .map-floor-space rect {
+  stroke-left-width: 1;
+}
+
+.map-floor-space rect {
+  stroke-width: 1.8;
+}
+
+.map-floor-alignment line {
+  stroke: rgba(9, 49, 112, .28);
+  stroke-width: 1.5;
+  stroke-dasharray: 4 4;
+}
+
+.map-floor-alignment text {
+  fill: #6a7180;
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: .08em;
+}
+
+@media (min-width: 620px) {
+  .map-floor-alignment text {
+    font-size: 11px;
+  }
+}
