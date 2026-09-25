@@ -22,7 +22,7 @@ export function ProjectsPage() {
     const q = query.trim().toLocaleLowerCase('pt-BR')
     return projects.filter((project) => {
       const matchesQuery = !q || [project.title, project.className, project.roomLabel, project.blockLabel, project.shortSummary].some((value) => value.toLocaleLowerCase('pt-BR').includes(q))
-      const matchesFilter = filter === 'todos' || project.blockId === filter
+      const matchesFilter = filter === 'todos' || project.blockId === filter || (filter === 'bloco-01' && project.locationIds.includes('laboratorio-ciencias'))
       return matchesQuery && matchesFilter
     })
   }, [query, filter])
