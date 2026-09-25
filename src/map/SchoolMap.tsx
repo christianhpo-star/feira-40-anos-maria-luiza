@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { projects } from '../data/projects'
 import { locationById } from '../data/locations'
 import { useProgress } from '../context/ProgressContext'
@@ -182,12 +183,55 @@ function CampusMap({ destinationId, onZoneSelect }: Omit<SchoolMapProps, 'view'>
 
 function BlocksMap({ destinationId, onZoneSelect }: Omit<SchoolMapProps, 'view'>) {
   const { currentLocation, visited } = useProgress()
-  const activate = (blockId: string) => onZoneSelect?.(blockId)
 
-  const blockClass = (blockId: string) => {
-    const currentBlock = currentLocation ? roomBlocks[currentLocation] : null
-    const destinationBlock = destinationId ? roomBlocks[destinationId] : null
-    return ['map-block', currentBlock === blockId ? 'is-current' : '', destinationBlock === blockId ? 'is-destination' : ''].filter(Boolean).join(' ')
+  type BlockId = 'bloco-01' | 'bloco-02' | 'bloco-03'
+  type BlockOneFloor = '1' | '2'
+
+  const isBlockId = (value: string | null | undefined): value is BlockId =>
+    value === 'bloco-01' || value === 'bloco-02' || value === 'bloco-03'
+
+  const lowerFloorLocations = new Set([
+    'laboratorio-ciencias',
+    'sala-professores',
+    'vice-direcao',
+    'secretaria-escolar'
+  ])
+
+  const blockFromTarget = (target: string | null | undefined): BlockId | null => {
+    const block = target ? roomBlocks[target] : null
+    return isBlockId(block) ? block : null
+  }
+
+  const floorFromTarget = (target: string | null | undefined): BlockOneFloor =>
+    target && lowerFloorLocations.has(target) ? '1' : '2'
+
+  const destinationBlock = blockFromTarget(destinationId)
+  const currentBlock = blockFromTarget(currentLocation)
+
+  const [selectedBlock, setSelectedBlock] = useState<BlockId>(destinationBlock ?? currentBlock ?? 'bloco-01')
+  const [blockOneFloor, setBlockOneFloor] = useState<BlockOneFloor>(
+    destinationBlock === 'bloco-01'
+      ? floorFromTarget(destinationId)
+      : currentBlock === 'bloco-01'
+        ? floorFromTarget(currentLocation)
+        : '2'
+  )
+
+  useEffect(() => {
+    if (!destinationBlock) return
+    setSelectedBlock(destinationBlock)
+    if (destinationBlock === 'bloco-01') setBlockOneFloor(floorFromTarget(destinationId))
+  }, [destinationBlock, destinationId])
+
+  useEffect(() => {
+    if (destinationId || !currentBlock) return
+    setSelectedBlock(currentBlock)
+    if (currentBlock === 'bloco-01') setBlockOneFloor(floorFromTarget(currentLocation))
+  }, [currentBlock, currentLocation, destinationId])
+
+  const chooseBlock = (blockId: BlockId) => {
+    setSelectedBlock(blockId)
+    onZoneSelect?.(blockId)
   }
 
   const roomProps = { currentLocation, destinationId, visited, onZoneSelect }
@@ -201,118 +245,194 @@ function BlocksMap({ destinationId, onZoneSelect }: Omit<SchoolMapProps, 'view'>
     destinationId === 'laboratorio-ciencias' ? 'is-destination' : ''
   ].filter(Boolean).join(' ')
 
+  const captions: Record<BlockId, string> = {
+    'bloco-01': blockOneFloor === '2'
+      ? 'Bloco 1 · 2º andar: salas 01 a 06.'
+      : 'Bloco 1 · 1º andar: Laboratório de Química → Sala dos Professores → Vice-direção → Secretaria.',
+    'bloco-02': 'Bloco 2: salas 07, 08, 09, 10, 11, 12 e 16.',
+    'bloco-03': 'Bloco 3: salas 14, 15, 13 e 17.'
+  }
+
   return (
-    <div className="map-shell" aria-label="Mapa de blocos e salas">
-      <svg className="school-map rooms-map" viewBox="0 0 760 1070" role="img" aria-labelledby="roomsTitle roomsDesc" preserveAspectRatio="xMidYMid meet">
-        <title id="roomsTitle">Mapa dos blocos e salas</title>
-        <desc id="roomsDesc">No Bloco 1, o primeiro e o segundo andar ocupam a mesma planta retangular. No segundo andar ficam as salas 1 a 6. No primeiro andar, na mesma orientação, ficam Laboratório de Química, Sala dos Professores, Vice-direção e Secretaria. Depois da passarela fica o Bloco 2 com salas 7, 8, 9, 10, 11, 12 e 16; e o Bloco 3 com salas 13, 14, 15 e 17. O portão da Secretaria fica à esquerda e a entrada de famílias à direita.</desc>
-        <rect x="20" y="20" width="720" height="1030" rx="16" className="map-boundary" />
-
-        <g className="map-gate map-gate--secretaria">
-          <line x1="20" y1="58" x2="20" y2="112" />
-          <text x="42" y="52" className="map-gate-label">Secretaria</text>
-        </g>
-        <g className={currentLocation === 'entrada-pais' ? 'map-gate map-gate--entrada is-current' : 'map-gate map-gate--entrada'}>
-          <line x1="740" y1="58" x2="740" y2="112" />
-          <text x="718" y="52" textAnchor="end" className="map-gate-label">Entrada de famílias</text>
-          {currentLocation === 'entrada-pais' && <text x="718" y="76" textAnchor="end" className="you-are-here-label">● Você está aqui</text>}
-        </g>
-
-        <g className={blockClass('bloco-01')} role="button" tabIndex={0} aria-label={`Bloco 1, ${blockProjects('bloco-01').length} exposições`}
-          onClick={() => activate('bloco-01')} onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') activate('bloco-01') }}>
-          <rect x="70" y="90" width="620" height="430" rx="20" />
-          <text x="380" y="125" textAnchor="middle" className="map-block-title">Bloco 1</text>
-
-          <text x="95" y="155" className="map-floor-band-label">2º ANDAR · MESMA PLANTA DO 1º ANDAR</text>
-          <g className="map-floor-plan" aria-label="Planta retangular do 2º andar do Bloco 1">
-            <Room id="sala-01" x={95} y={168} width={95} height={82} rx={0} floorSegment {...roomProps} />
-            <Room id="sala-02" x={190} y={168} width={95} height={82} rx={0} floorSegment {...roomProps} />
-            <Room id="sala-03" x={285} y={168} width={95} height={82} rx={0} floorSegment {...roomProps} />
-            <Room id="sala-04" x={380} y={168} width={95} height={82} rx={0} floorSegment {...roomProps} />
-            <Room id="sala-05" x={475} y={168} width={95} height={82} rx={0} floorSegment {...roomProps} />
-            <Room id="sala-06" x={570} y={168} width={95} height={82} rx={0} floorSegment {...roomProps} />
-            <rect x="95" y="168" width="570" height="82" rx="10" className="map-floor-shell map-floor-shell--outline" />
-          </g>
-
-          <text x="95" y="292" className="map-floor-band-label">1º ANDAR · MESMO PRÉDIO / MESMA ORIENTAÇÃO</text>
-          <g className="map-floor-plan" aria-label="Planta retangular do 1º andar do Bloco 1">
-            <g
-              className={`${labClass} map-floor-space`}
-              role="button"
-              tabIndex={0}
-              aria-label="Laboratório de Química, primeiro espaço do 1º andar do Bloco 1"
-              onClick={(event) => { event.stopPropagation(); activate('laboratorio') }}
-              onKeyDown={(event) => {
-                if (event.key === 'Enter' || event.key === ' ') {
-                  event.stopPropagation()
-                  activate('laboratorio')
-                }
-              }}
-            >
-              <title>Laboratório de Química — 1º andar do Bloco 1</title>
-              <rect x="95" y="305" width="142.5" height="82" rx="0" />
-              <text x="166.25" y="338" textAnchor="middle" className="map-lab-label">LABORATÓRIO</text>
-              <text x="166.25" y="358" textAnchor="middle" className="map-lab-label">DE QUÍMICA</text>
-              {labVisited && <text x="222" y="322" textAnchor="middle" className="map-room-check">✓</text>}
-            </g>
-
-            <g className="map-reference-space map-floor-space" aria-label="Sala dos Professores, 1º andar do Bloco 1">
-              <rect x="237.5" y="305" width="142.5" height="82" rx="0" />
-              <text x="308.75" y="338" textAnchor="middle" className="map-reference-label">SALA DOS</text>
-              <text x="308.75" y="358" textAnchor="middle" className="map-reference-label">PROFESSORES</text>
-            </g>
-
-            <g className="map-reference-space map-floor-space" aria-label="Vice-direção, 1º andar do Bloco 1">
-              <rect x="380" y="305" width="142.5" height="82" rx="0" />
-              <text x="451.25" y="351" textAnchor="middle" className="map-reference-label">VICE-DIREÇÃO</text>
-            </g>
-
-            <g className="map-reference-space map-floor-space" aria-label="Secretaria, 1º andar do Bloco 1">
-              <rect x="522.5" y="305" width="142.5" height="82" rx="0" />
-              <text x="593.75" y="351" textAnchor="middle" className="map-reference-label">SECRETARIA</text>
-            </g>
-            <rect x="95" y="305" width="570" height="82" rx="10" className="map-floor-shell map-floor-shell--outline" />
-          </g>
-
-          <g className="map-floor-alignment" aria-hidden="true">
-            <line x1="95" y1="265" x2="95" y2="288" />
-            <line x1="665" y1="265" x2="665" y2="288" />
-            <text x="380" y="278" textAnchor="middle">MESMA EDIFICAÇÃO</text>
-          </g>
-        </g>
-
-        <g className="map-walkway">
-          <rect x="330" y="520" width="100" height="65" rx="12" />
-          <text x="380" y="559" textAnchor="middle" className="map-small">Passarela</text>
-        </g>
-
-        <g className={blockClass('bloco-02')} role="button" tabIndex={0} aria-label={`Bloco 2, ${blockProjects('bloco-02').length} exposições`}
-          onClick={() => activate('bloco-02')} onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') activate('bloco-02') }}>
-          <rect x="50" y="595" width="660" height="210" rx="20" />
-          <text x="380" y="640" textAnchor="middle" className="map-block-title">Bloco 2</text>
-          <Room id="sala-07" x={65} y={720} {...roomProps} />
-          <Room id="sala-08" x={155} y={720} {...roomProps} />
-          <Room id="sala-09" x={245} y={720} {...roomProps} />
-          <Room id="sala-10" x={335} y={720} {...roomProps} />
-          <Room id="sala-11" x={425} y={720} {...roomProps} />
-          <Room id="sala-12" x={515} y={720} {...roomProps} />
-          <Room id="sala-16" x={605} y={720} {...roomProps} />
-        </g>
-
-        <g className={blockClass('bloco-03')} role="button" tabIndex={0} aria-label={`Bloco 3, ${blockProjects('bloco-03').length} exposições`}
-          onClick={() => activate('bloco-03')} onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') activate('bloco-03') }}>
-          <rect x="120" y="840" width="450" height="155" rx="20" />
-          <text x="345" y="882" textAnchor="middle" className="map-block-title">Bloco 3</text>
-          <Room id="sala-14" x={145} y={915} {...roomProps} />
-          <Room id="sala-15" x={255} y={915} {...roomProps} />
-          <Room id="sala-13" x={365} y={915} {...roomProps} />
-          <Room id="sala-17" x={475} y={915} {...roomProps} />
-        </g>
-      </svg>
-      <div className="map-caption">
-        <strong>Blocos e salas</strong>
-        <span>Os dois pavimentos do Bloco 1 usam a mesma planta retangular. 2º andar: salas 01–06. 1º andar: Laboratório de Química → Sala dos Professores → Vice-direção → Secretaria. As salas 09, 10 e 17 servem apenas como referência.</span>
+    <div className="map-shell map-shell--room-finder" aria-label="Localizador de blocos e salas">
+      <div className="map-block-switcher" role="tablist" aria-label="Escolha o bloco">
+        {([
+          ['bloco-01', 'Bloco 1', '01–06'],
+          ['bloco-02', 'Bloco 2', '07–12 · 16'],
+          ['bloco-03', 'Bloco 3', '13–15 · 17']
+        ] as const).map(([id, label, rooms]) => (
+          <button
+            key={id}
+            type="button"
+            role="tab"
+            aria-selected={selectedBlock === id}
+            className={selectedBlock === id ? 'map-block-tab is-active' : 'map-block-tab'}
+            onClick={() => chooseBlock(id)}
+          >
+            <strong>{label}</strong>
+            <small>salas {rooms}</small>
+          </button>
+        ))}
       </div>
+
+      {selectedBlock === 'bloco-01' && (
+        <div className="map-floor-switcher" role="tablist" aria-label="Escolha o andar do Bloco 1">
+          <button
+            type="button"
+            role="tab"
+            aria-selected={blockOneFloor === '2'}
+            className={blockOneFloor === '2' ? 'map-floor-tab is-active' : 'map-floor-tab'}
+            onClick={() => {
+              setBlockOneFloor('2')
+              onZoneSelect?.('bloco-01')
+            }}
+          >
+            <span>2º andar</span>
+            <small>Salas 01–06</small>
+          </button>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={blockOneFloor === '1'}
+            className={blockOneFloor === '1' ? 'map-floor-tab is-active' : 'map-floor-tab'}
+            onClick={() => {
+              setBlockOneFloor('1')
+              onZoneSelect?.('bloco-01')
+            }}
+          >
+            <span>1º andar</span>
+            <small>Laboratório e apoio</small>
+          </button>
+        </div>
+      )}
+
+      <div className="map-room-stage" aria-live="polite">
+        <svg className="school-map rooms-map rooms-map--focused" viewBox="0 0 760 560" role="img" aria-labelledby="roomsTitle roomsDesc" preserveAspectRatio="xMidYMid meet">
+          <title id="roomsTitle">Localizador de salas da escola</title>
+          <desc id="roomsDesc">{captions[selectedBlock]}</desc>
+          <rect x="20" y="20" width="720" height="520" rx="20" className="map-boundary" />
+
+          {selectedBlock === 'bloco-01' && (
+            <>
+              <text x="380" y="78" textAnchor="middle" className="map-focused-title">Bloco 1 · {blockOneFloor}º andar</text>
+              <text x="380" y="106" textAnchor="middle" className="map-focused-subtitle">
+                {blockOneFloor === '2' ? 'Salas de exposição' : 'Laboratório e setores de apoio'}
+              </text>
+
+              <g className="map-focused-building" aria-label={captions['bloco-01']}>
+                <rect x="70" y="145" width="620" height="280" rx="20" className="map-focused-building-shell" />
+
+                {blockOneFloor === '2' ? (
+                  <>
+                    <text x="95" y="190" className="map-floor-band-label">SALAS 01–06 · MESMA PLANTA DO 1º ANDAR</text>
+                    <g className="map-floor-plan" aria-label="2º andar do Bloco 1">
+                      <Room id="sala-01" x={95} y={225} width={95} height={120} rx={0} floorSegment {...roomProps} />
+                      <Room id="sala-02" x={190} y={225} width={95} height={120} rx={0} floorSegment {...roomProps} />
+                      <Room id="sala-03" x={285} y={225} width={95} height={120} rx={0} floorSegment {...roomProps} />
+                      <Room id="sala-04" x={380} y={225} width={95} height={120} rx={0} floorSegment {...roomProps} />
+                      <Room id="sala-05" x={475} y={225} width={95} height={120} rx={0} floorSegment {...roomProps} />
+                      <Room id="sala-06" x={570} y={225} width={95} height={120} rx={0} floorSegment {...roomProps} />
+                      <rect x="95" y="225" width="570" height="120" rx="10" className="map-floor-shell map-floor-shell--outline" />
+                    </g>
+                    <text x="380" y="382" textAnchor="middle" className="map-corridor-label">CORREDOR · mesma orientação do pavimento inferior</text>
+                  </>
+                ) : (
+                  <>
+                    <text x="95" y="190" className="map-floor-band-label">1º ANDAR · MESMA PLANTA DO 2º ANDAR</text>
+                    <g className="map-floor-plan" aria-label="1º andar do Bloco 1">
+                      <g
+                        className={`${labClass} map-floor-space`}
+                        role="button"
+                        tabIndex={0}
+                        aria-label="Laboratório de Química"
+                        onClick={() => onZoneSelect?.('laboratorio')}
+                        onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') onZoneSelect?.('laboratorio') }}
+                      >
+                        <rect x="95" y="225" width="142.5" height="120" rx="0" />
+                        <text x="166.25" y="274" textAnchor="middle" className="map-lab-label">LABORATÓRIO</text>
+                        <text x="166.25" y="298" textAnchor="middle" className="map-lab-label">DE QUÍMICA</text>
+                        {labVisited && <text x="222" y="244" textAnchor="middle" className="map-room-check">✓</text>}
+                      </g>
+
+                      <g className="map-reference-space map-floor-space" aria-label="Sala dos Professores">
+                        <rect x="237.5" y="225" width="142.5" height="120" rx="0" />
+                        <text x="308.75" y="274" textAnchor="middle" className="map-reference-label">SALA DOS</text>
+                        <text x="308.75" y="298" textAnchor="middle" className="map-reference-label">PROFESSORES</text>
+                      </g>
+
+                      <g className="map-reference-space map-floor-space" aria-label="Vice-direção">
+                        <rect x="380" y="225" width="142.5" height="120" rx="0" />
+                        <text x="451.25" y="291" textAnchor="middle" className="map-reference-label">VICE-DIREÇÃO</text>
+                      </g>
+
+                      <g className="map-reference-space map-floor-space" aria-label="Secretaria">
+                        <rect x="522.5" y="225" width="142.5" height="120" rx="0" />
+                        <text x="593.75" y="291" textAnchor="middle" className="map-reference-label">SECRETARIA</text>
+                      </g>
+                      <rect x="95" y="225" width="570" height="120" rx="10" className="map-floor-shell map-floor-shell--outline" />
+                    </g>
+                    <text x="380" y="382" textAnchor="middle" className="map-corridor-label">CORREDOR · mesma orientação do pavimento superior</text>
+                  </>
+                )}
+
+                <g className="map-building-orientation" aria-hidden="true">
+                  <line x1="95" y1="405" x2="665" y2="405" />
+                  <text x="380" y="400" textAnchor="middle">MESMA EDIFICAÇÃO RETANGULAR</text>
+                </g>
+              </g>
+            </>
+          )}
+
+          {selectedBlock === 'bloco-02' && (
+            <>
+              <text x="380" y="78" textAnchor="middle" className="map-focused-title">Bloco 2</text>
+              <text x="380" y="106" textAnchor="middle" className="map-focused-subtitle">Salas 07, 08, 09, 10, 11, 12 e 16</text>
+              <g className="map-focused-building" aria-label={captions['bloco-02']}>
+                <rect x="70" y="145" width="620" height="280" rx="20" className="map-focused-building-shell" />
+                <g className="map-floor-plan" aria-label="Salas do Bloco 2">
+                  <Room id="sala-07" x={90} y={225} width={82} height={120} rx={0} floorSegment {...roomProps} />
+                  <Room id="sala-08" x={172} y={225} width={82} height={120} rx={0} floorSegment {...roomProps} />
+                  <Room id="sala-09" x={254} y={225} width={82} height={120} rx={0} floorSegment {...roomProps} />
+                  <Room id="sala-10" x={336} y={225} width={82} height={120} rx={0} floorSegment {...roomProps} />
+                  <Room id="sala-11" x={418} y={225} width={82} height={120} rx={0} floorSegment {...roomProps} />
+                  <Room id="sala-12" x={500} y={225} width={82} height={120} rx={0} floorSegment {...roomProps} />
+                  <Room id="sala-16" x={582} y={225} width={82} height={120} rx={0} floorSegment {...roomProps} />
+                  <rect x="90" y="225" width="574" height="120" rx="10" className="map-floor-shell map-floor-shell--outline" />
+                </g>
+                <text x="380" y="382" textAnchor="middle" className="map-corridor-label">Toque em uma sala destacada para ver as exposições</text>
+              </g>
+            </>
+          )}
+
+          {selectedBlock === 'bloco-03' && (
+            <>
+              <text x="380" y="78" textAnchor="middle" className="map-focused-title">Bloco 3</text>
+              <text x="380" y="106" textAnchor="middle" className="map-focused-subtitle">Salas 14, 15, 13 e 17</text>
+              <g className="map-focused-building" aria-label={captions['bloco-03']}>
+                <rect x="70" y="145" width="620" height="280" rx="20" className="map-focused-building-shell" />
+                <g className="map-floor-plan" aria-label="Salas do Bloco 3">
+                  <Room id="sala-14" x={100} y={225} width={140} height={120} rx={0} floorSegment {...roomProps} />
+                  <Room id="sala-15" x={240} y={225} width={140} height={120} rx={0} floorSegment {...roomProps} />
+                  <Room id="sala-13" x={380} y={225} width={140} height={120} rx={0} floorSegment {...roomProps} />
+                  <Room id="sala-17" x={520} y={225} width={140} height={120} rx={0} floorSegment {...roomProps} />
+                  <rect x="100" y="225" width="560" height="120" rx="10" className="map-floor-shell map-floor-shell--outline" />
+                </g>
+                <text x="380" y="382" textAnchor="middle" className="map-corridor-label">Toque em uma sala destacada para ver as exposições</text>
+              </g>
+            </>
+          )}
+
+          {currentLocation === 'entrada-pais' && (
+            <text x="715" y="505" textAnchor="end" className="you-are-here-label">● Entrada das famílias</text>
+          )}
+        </svg>
+      </div>
+
+      <div className="map-caption">
+        <strong>{selectedBlock === 'bloco-01' ? `Bloco 1 · ${blockOneFloor}º andar` : selectedBlock === 'bloco-02' ? 'Bloco 2' : 'Bloco 3'}</strong>
+        <span>{captions[selectedBlock]}</span>
+      </div>
+
       <div className="map-legend" aria-label="Legenda do mapa">
         <span><i className="legend-swatch legend-swatch--project" /> Exposição da feira</span>
         <span><i className="legend-swatch legend-swatch--neutral" /> Referência</span>
