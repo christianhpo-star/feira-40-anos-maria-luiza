@@ -83,7 +83,9 @@ const forbiddenPublicCopy = [
   /ordem será refinada/i,
   /permanecerá desativad[oa]/i,
   /moderação e privacidade/i,
-  /o app não usa GPS/i
+  /o app não usa GPS/i,
+  /principalmente\s+2º andar/i,
+  /isportivos/i
 ]
 
 for (const file of sourceFiles) {
