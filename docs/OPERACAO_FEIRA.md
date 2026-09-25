@@ -9,7 +9,7 @@ Não adicionar novas funcionalidades de alto risco no dia da feira. A partir des
 Depois de confirmar a URL pública de produção no Netlify, usar:
 
 ```
-{BASE_URL}/?local=entrada-pais
+https://mlml2.netlify.app/?local=entrada-pais
 ```
 
 Esse parâmetro faz o Passaporte registrar a entrada principal como localização inicial.
@@ -19,7 +19,7 @@ Esse parâmetro faz o Passaporte registrar a entrada principal como localizaçã
 Formato:
 
 ```
-{BASE_URL}/projeto/{ID_DO_PROJETO}?local={ID_DA_LOCALIZACAO}
+https://mlml2.netlify.app/projeto/{ID_DO_PROJETO}?local={ID_DA_LOCALIZACAO}
 ```
 
 Exemplos de localização:
