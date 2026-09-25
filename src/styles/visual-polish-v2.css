@@ -1783,3 +1783,250 @@ body {
     font-size: 11px;
   }
 }
+
+
+/* Localizador dinâmico de salas — mesma escala da visão geral */
+.map-view-panel {
+  min-height: 0;
+  animation: mapViewEnter .18s ease-out;
+}
+
+@keyframes mapViewEnter {
+  from {
+    opacity: .45;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.map-shell--room-finder {
+  overflow: hidden !important;
+}
+
+.map-block-switcher {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  padding: 12px 12px 8px;
+  background: linear-gradient(180deg, #fbfafc, #fff);
+  border-bottom: 1px solid rgba(31, 36, 48, .06);
+}
+
+.map-block-tab,
+.map-floor-tab {
+  border: 1px solid rgba(31, 36, 48, .09);
+  background: #fff;
+  color: #606675;
+  cursor: pointer;
+  transition: border-color .15s ease, background .15s ease, box-shadow .15s ease, transform .15s ease;
+}
+
+.map-block-tab {
+  min-height: 58px;
+  display: grid;
+  place-items: center;
+  gap: 2px;
+  padding: 8px 6px;
+  border-radius: 14px;
+}
+
+.map-block-tab strong {
+  color: #2a3140;
+  font-size: .86rem;
+}
+
+.map-block-tab small {
+  font-size: .68rem;
+  white-space: nowrap;
+}
+
+.map-block-tab.is-active {
+  border-color: rgba(144, 29, 115, .24);
+  background: linear-gradient(145deg, #fff, #fbf0f7);
+  box-shadow: 0 7px 18px rgba(144, 29, 115, .09);
+}
+
+.map-block-tab.is-active strong {
+  color: var(--magenta);
+}
+
+.map-floor-switcher {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  padding: 4px 12px 12px;
+  background: #fff;
+  border-bottom: 1px solid rgba(31, 36, 48, .06);
+}
+
+.map-floor-tab {
+  min-height: 48px;
+  display: grid;
+  align-content: center;
+  gap: 1px;
+  padding: 7px 10px;
+  border-radius: 12px;
+  text-align: left;
+}
+
+.map-floor-tab span {
+  color: #283347;
+  font-size: .82rem;
+  font-weight: 900;
+}
+
+.map-floor-tab small {
+  font-size: .68rem;
+}
+
+.map-floor-tab.is-active {
+  border-color: rgba(9, 49, 112, .20);
+  background: var(--blue-soft);
+  box-shadow: inset 4px 0 0 var(--blue);
+}
+
+.map-floor-tab.is-active span {
+  color: var(--blue);
+}
+
+.map-block-tab:focus-visible,
+.map-floor-tab:focus-visible {
+  outline: 3px solid rgba(9, 49, 112, .28);
+  outline-offset: 2px;
+}
+
+.map-room-stage {
+  position: relative;
+  overflow: hidden;
+  background: #fcfbfd;
+}
+
+.rooms-map--focused {
+  width: 100% !important;
+  height: auto !important;
+  min-width: 0 !important;
+  aspect-ratio: 760 / 560;
+}
+
+.map-focused-title {
+  fill: #202738;
+  font-size: 28px;
+  font-weight: 950;
+  letter-spacing: -.02em;
+}
+
+.map-focused-subtitle {
+  fill: #6a7080;
+  font-size: 15px;
+  font-weight: 750;
+}
+
+.map-focused-building-shell {
+  fill: #eef4fd;
+  stroke: #4a83e8;
+  stroke-width: 2.5;
+}
+
+.rooms-map--focused .map-floor-band-label {
+  font-size: 13px;
+}
+
+.rooms-map--focused .map-floor-room rect,
+.rooms-map--focused .map-floor-space rect {
+  stroke-width: 2;
+}
+
+.rooms-map--focused .map-floor-room text {
+  font-size: 24px;
+  font-weight: 950;
+}
+
+.rooms-map--focused .map-reference-label,
+.rooms-map--focused .map-lab-label {
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.map-corridor-label {
+  fill: #687080;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .025em;
+}
+
+.map-building-orientation line {
+  stroke: rgba(9, 49, 112, .22);
+  stroke-width: 1.5;
+}
+
+.map-building-orientation text {
+  fill: #687080;
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: .08em;
+}
+
+.map-shell--room-finder .map-caption {
+  min-height: 66px;
+}
+
+@media (hover: hover) {
+  .map-block-tab:hover,
+  .map-floor-tab:hover {
+    transform: translateY(-1px);
+    border-color: rgba(144, 29, 115, .22);
+  }
+}
+
+@media (max-width: 430px) {
+  .map-block-switcher {
+    gap: 6px;
+    padding: 10px 10px 7px;
+  }
+
+  .map-block-tab {
+    min-height: 54px;
+    padding: 7px 4px;
+    border-radius: 12px;
+  }
+
+  .map-block-tab strong {
+    font-size: .79rem;
+  }
+
+  .map-block-tab small {
+    font-size: .61rem;
+  }
+
+  .map-floor-switcher {
+    gap: 6px;
+    padding: 3px 10px 10px;
+  }
+
+  .map-floor-tab {
+    min-height: 46px;
+  }
+
+  .rooms-map--focused .map-floor-room text {
+    font-size: 25px;
+  }
+
+  .rooms-map--focused .map-reference-label,
+  .rooms-map--focused .map-lab-label {
+    font-size: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .map-view-panel {
+    animation: none;
+  }
+
+  .map-block-tab,
+  .map-floor-tab {
+    transition: none;
+  }
+}
