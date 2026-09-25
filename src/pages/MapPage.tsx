@@ -21,6 +21,7 @@ export function MapPage() {
   const destinationLocation = destination ? locationById[destination] : null
   const initialView: SchoolMapView = destination?.startsWith('sala-') ? 'rooms' : 'campus'
   const { currentLocation, visited, setCurrentLocation } = useProgress()
+  const currentLocationData = currentLocation ? locationById[currentLocation] : null
   const [view, setView] = useState<SchoolMapView>(initialView)
   const [zone, setZone] = useState<string | null>(null)
 
@@ -36,6 +37,18 @@ export function MapPage() {
   return (
     <main id="conteudo" className="page">
       <PageHeader title="Mapa da escola" subtitle="Encontre blocos, salas e áreas de visitação." />
+
+      {currentLocationData && (
+        <section className="current-location-card" aria-label="Localização atual">
+          <span className="eyebrow">Você está aqui</span>
+          <strong>{currentLocationData.label}</strong>
+        </section>
+      )}
+
+      <div className="floor-summary" aria-label="Resumo dos andares">
+        <span><strong>1º andar</strong>Cantina / Refeitório</span>
+        <span><strong>2º andar</strong>Salas de exposição</span>
+      </div>
 
       {destinationLocation && (
         <section className="destination-card" aria-label="Destino selecionado">
@@ -79,8 +92,8 @@ export function MapPage() {
       <section className="visitor-tip visitor-tip--attention">
         <span aria-hidden="true">↟</span>
         <div>
-          <strong>1º e 2º andar</strong>
-          <p>A visão geral identifica as áreas de salas no 2º andar e a Cantina/Refeitório no 1º andar. Se precisar de apoio para circular pela escola, procure nossa equipe.</p>
+          <strong>Acesso ao 2º andar</strong>
+          <p>O acesso às salas do 2º andar é feito por escadas. A escola não possui elevador ou rampa para esse pavimento. Se precisar de apoio, procure nossa equipe.</p>
         </div>
       </section>
 
