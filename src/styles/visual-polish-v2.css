@@ -1761,11 +1761,6 @@ body {
   stroke-width: 1.8;
 }
 
-.map-floor-room + .map-floor-room rect,
-.map-floor-space + .map-floor-space rect {
-  stroke-left-width: 1;
-}
-
 .map-floor-space rect {
   stroke-width: 1.8;
 }
