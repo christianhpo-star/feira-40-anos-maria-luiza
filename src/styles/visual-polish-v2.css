@@ -925,3 +925,289 @@ body {
     display: none;
   }
 }
+
+
+/* Correção visual 2 — marca + vitrine de projetos */
+.header-logo {
+  width: 64px;
+  height: 64px;
+  padding: 0;
+  flex: 0 0 64px;
+  border: 1px solid rgba(144,29,115,.08);
+  border-radius: 18px;
+  background-color: #fff;
+  background-image: url('/images/logo-escola.png');
+  background-repeat: no-repeat;
+  background-position: center 48%;
+  background-size: 138% auto;
+  box-shadow: 0 8px 22px rgba(31,36,48,.07);
+  overflow: hidden;
+}
+
+.projects-showcase {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  gap: 16px;
+  margin: 2px 0 16px;
+  padding: 18px;
+  border: 1px solid rgba(144,29,115,.11);
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 100% 0, rgba(21,133,56,.10), transparent 42%),
+    radial-gradient(circle at 0 100%, rgba(9,49,112,.07), transparent 38%),
+    linear-gradient(145deg, #fff, #fbf2f8);
+  box-shadow: 0 12px 28px rgba(31,36,48,.06);
+}
+
+.projects-showcase::after {
+  content: "40";
+  position: absolute;
+  right: -8px;
+  top: -30px;
+  color: rgba(144,29,115,.045);
+  font-size: 8rem;
+  font-weight: 950;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.projects-showcase > div {
+  position: relative;
+  z-index: 1;
+}
+
+.projects-showcase strong {
+  display: block;
+  max-width: 18ch;
+  margin-top: 6px;
+  color: #202738;
+  font-size: clamp(1.22rem, 4.8vw, 1.55rem);
+  line-height: 1.08;
+  letter-spacing: -.025em;
+}
+
+.projects-showcase p {
+  max-width: 38rem;
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: .9rem;
+  line-height: 1.48;
+}
+
+.projects-showcase__timeline {
+  display: grid;
+  grid-template-columns: auto 1fr auto 1fr auto;
+  align-items: center;
+  gap: 8px;
+  color: var(--blue);
+  font-size: .72rem;
+  font-weight: 900;
+  letter-spacing: .04em;
+}
+
+.projects-showcase__timeline i {
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--magenta), var(--blue), var(--green));
+  opacity: .32;
+}
+
+.projects-search {
+  min-height: 56px;
+  border-color: rgba(9,49,112,.12);
+  background: rgba(255,255,255,.94);
+  box-shadow: 0 8px 22px rgba(31,36,48,.045);
+}
+
+.projects-search > span[aria-hidden="true"] {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  border-radius: 10px;
+  background: var(--blue-soft);
+  color: var(--blue);
+  font-weight: 900;
+}
+
+.filter-row {
+  gap: 9px;
+  padding: 13px 1px 9px;
+}
+
+.filter-chip {
+  min-height: 38px;
+  padding: 8px 13px;
+  border-color: rgba(31,36,48,.08);
+  background: rgba(255,255,255,.92);
+  box-shadow: 0 4px 12px rgba(31,36,48,.035);
+  font-size: .76rem;
+  font-weight: 800;
+}
+
+.filter-chip.is-active {
+  background: linear-gradient(135deg, var(--magenta), #a42a84);
+  border-color: transparent;
+  box-shadow: 0 8px 18px rgba(144,29,115,.18);
+}
+
+.results-count {
+  margin: 9px 2px 12px;
+  color: #727786;
+  font-size: .8rem;
+  font-weight: 700;
+}
+
+.project-list--showcase {
+  gap: 14px;
+}
+
+.project-tile {
+  min-width: 0;
+}
+
+.project-tile.has-map-action {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(31,36,48,.075);
+  border-radius: 21px;
+  background: #fff;
+  box-shadow: 0 12px 28px rgba(31,36,48,.065);
+}
+
+.project-tile.has-map-action .project-card {
+  min-height: 100%;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background:
+    radial-gradient(circle at 100% 0, rgba(144,29,115,.035), transparent 32%),
+    #fff;
+}
+
+.project-tile.has-map-action .project-card::before {
+  width: 5px;
+}
+
+.project-tile--bloco-01.has-map-action .project-card::before {
+  background: linear-gradient(180deg, var(--magenta), var(--blue));
+}
+
+.project-tile--bloco-02.has-map-action .project-card::before {
+  background: linear-gradient(180deg, var(--blue), var(--green));
+}
+
+.project-tile--bloco-03.has-map-action .project-card::before {
+  background: linear-gradient(180deg, var(--green), var(--magenta));
+}
+
+.project-tile--area-externa.has-map-action .project-card::before {
+  background: linear-gradient(180deg, #b97816, var(--green));
+}
+
+.project-tile--refeitorio.has-map-action .project-card::before {
+  background: linear-gradient(180deg, #b97816, var(--magenta));
+}
+
+.project-card__time {
+  width: fit-content;
+  margin-top: 10px;
+  color: var(--blue);
+  font-size: .7rem;
+  font-weight: 900;
+  letter-spacing: .04em;
+}
+
+.project-card__time::before {
+  content: "◷ ";
+  color: var(--magenta);
+}
+
+.project-tile.has-map-action .project-card h3 {
+  margin-top: 5px;
+  font-size: 1.08rem;
+  line-height: 1.2;
+}
+
+.project-tile.has-map-action .project-card p {
+  color: #646a79;
+  font-size: .88rem;
+  line-height: 1.48;
+}
+
+.project-card__map-action {
+  position: relative;
+  z-index: 1;
+  min-height: 50px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 16px;
+  border-top: 1px solid rgba(144,29,115,.10);
+  background: linear-gradient(180deg, #fff, #fcf5fa);
+  color: var(--magenta);
+  text-decoration: none;
+  font-size: .84rem;
+  font-weight: 900;
+}
+
+.project-card__map-action > span:first-child {
+  width: 29px;
+  height: 29px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  background: #f8eaf4;
+}
+
+.project-card__map-arrow {
+  color: var(--blue);
+  font-size: 1rem;
+}
+
+.project-card__map-action:focus-visible,
+.project-card:focus-visible {
+  outline: 3px solid rgba(9,49,112,.30);
+  outline-offset: -3px;
+}
+
+@media (hover: hover) {
+  .project-tile.has-map-action:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 34px rgba(31,36,48,.085);
+  }
+
+  .project-card__map-action:hover {
+    background: linear-gradient(180deg, #fff, #faedf6);
+  }
+}
+
+@media (max-width: 430px) {
+  .header-logo {
+    width: 58px;
+    height: 58px;
+    flex-basis: 58px;
+    border-radius: 16px;
+    background-size: 140% auto;
+  }
+
+  .projects-showcase {
+    padding: 16px;
+    border-radius: 19px;
+  }
+
+  .projects-showcase::after {
+    font-size: 6.8rem;
+  }
+
+  .project-list--showcase {
+    gap: 12px;
+  }
+
+  .project-tile.has-map-action {
+    border-radius: 19px;
+  }
+}
